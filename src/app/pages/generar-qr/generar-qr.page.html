@@ -11,12 +11,18 @@
   <div class="top-centered-container">
     <h2 class="qr-title">QR de la clase</h2>
 
+    <!-- Contenedor para el código QR -->
+    <div class="qr-container">
+      <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="QR Code" class="qr-image">
+      <ion-spinner *ngIf="!qrCodeDataUrl" name="crescent"></ion-spinner> <!-- Opcional: Spinner mientras se genera el QR -->
+    </div>
+
     <!-- Contenedor para el rectángulo de progreso -->
     <div class="progress-container">
       <div class="progress-bar" [ngStyle]="{ width: progress + '%' }"></div>
     </div>
 
-    <!-- Botón para reiniciar y simular el llenado -->
-    <ion-button (click)="resetAndStartFilling()" class="start-button">Generar nuevo codigo QR</ion-button>
+    <!-- Botón para generar un nuevo código QR -->
+    <ion-button (click)="resetAndStartFilling()" class="start-button">Generar nuevo código QR</ion-button>
   </div>
 </ion-content>

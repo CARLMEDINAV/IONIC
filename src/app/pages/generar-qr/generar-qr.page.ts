@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-generar-qr',
@@ -7,17 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenerarQrPage implements OnInit {
 
+  qrCodeDataUrl: string | undefined; // Variable para almacenar el QR generado
+  progress = 0; // Porcentaje de llenado
+
   constructor() { }
 
   ngOnInit() {
+    this.generateQRCode('http://localhost:8100/login'); // Genera un QR inicial
   }
 
-  progress = 0; // Porcentaje de llenado
+  // Función para generar un nuevo código QR
+  generateQRCode(data: string) {
+    QRCode.toDataURL(data)
+      .then((url: string | undefined) => {
+        this.qrCodeDataUrl = url;
+      })
+      .catch((err: any) => {
+        console.error('Error generando el código QR', err);
+      });
+  }
 
   // Función para reiniciar el progreso y comenzar el llenado
   resetAndStartFilling() {
     this.progress = 0; // Reinicia el progreso a 0
     this.startFilling(); // Comienza el llenado
+    this.generateQRCode('https://www.nueva-url.com'); // Genera un nuevo código QR
   }
 
   // Función para iniciar el llenado del rectángulo
