@@ -12,7 +12,7 @@ export class Estudiante {
     this.correo = correoDuoc;
 
     this.asistencia = '';
-    this.clasesAsistidas = 3;
+    this.clasesAsistidas = 0;
     this.estado = '';
   }
 

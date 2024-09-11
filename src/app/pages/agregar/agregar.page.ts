@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Estudiante } from 'src/app/model/Estudiantes';
-import { NavController,AlertController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-agregar',
@@ -13,14 +13,11 @@ export class AgregarPage implements OnInit {
   apellido: string = '';
   correo: string = '';  // Nueva propiedad
 
-
-
-  constructor(private navCtrl:NavController,
-    private alertCtrl: AlertController) { }
+  constructor(private navCtrl: NavController, private alertCtrl: AlertController) { }
 
   ngOnInit() { }
 
-  grabar() {
+  async grabar() {
     if (!this.nombre || !this.apellido || !this.correo) {
       console.log('Por favor complete todos los campos.');
       return;
@@ -44,8 +41,24 @@ export class AgregarPage implements OnInit {
     this.nombre = '';
     this.apellido = '';
     this.correo = '';  // Limpiar nueva propiedad
+
+    // Mostrar el diálogo de éxito
+    const alert = await this.alertCtrl.create({
+      header: 'Registro Exitoso',
+      message: 'Tu registro ha sido completado exitosamente.',
+      buttons: [{
+        text: 'Aceptar',
+        handler: () => {
+          // Redirigir al login después de hacer clic en Aceptar
+          this.navCtrl.navigateForward('/home');
+        }
+      }]
+    });
+
+    await alert.present();
   }
-  volver(){
-    this.navCtrl.navigateForward(['/login'])
+
+  volver() {
+    this.navCtrl.navigateForward('/login');
   }
 }

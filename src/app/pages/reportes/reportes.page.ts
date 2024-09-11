@@ -6,6 +6,7 @@ interface Estudiante {
   Clases_Asistidas: number; // Mantener consistencia con el nombre
   porcentajeAsistencia: number;
   estado: string;
+  apellido : string;
 }
 
 @Component({
@@ -22,7 +23,8 @@ export class ReportesPage implements OnInit {
     const estudiantesGuardados = localStorage.getItem('estudiantes');
     if (estudiantesGuardados) {
       this.estudiantes = JSON.parse(estudiantesGuardados).map((estudiante: any) => ({
-        nombre: estudiante.nombre||estudiante.apellido,
+        nombre: estudiante.nombre,
+        apellido: estudiante.apellido,
         Clases_Asistidas: estudiante.clasesAsistidas || estudiante.clasesAsistidas,
         estado: estudiante.estado || ''
       }));
