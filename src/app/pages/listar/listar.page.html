@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lista de Estudiantes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-list [inset]="true">
+    <ion-item-sliding *ngFor="let estudiante of estudiantes">
+      <ion-item>
+        <ion-avatar aria-hidden="true" slot="start">
+          <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          {{ estudiante.nombre }} {{ estudiante.apellido }}
+          <br />
+          <strong>Clases Asistidas:</strong> {{ estudiante.clasesAsistidas }}
+          <br />
+          <strong>Estado:</strong> {{ estudiante.estado }}
+        </ion-label>
+        <ion-button 
+          color="success" 
+          size="small" 
+          (click)="marcarAsistencia(estudiante, 'Presente')">
+          Presente
+        </ion-button>
+        <ion-button 
+          color="danger" 
+          size="small" 
+          (click)="marcarAsistencia(estudiante, 'Ausente')">
+          Ausente
+        </ion-button>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-item>
+    <ion-label>
+      <strong>Porcentaje Presente:</strong> {{ porcentajePresente | number:'1.0-2' }}%
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <strong>Porcentaje Ausente:</strong> {{ porcentajeAusente | number:'1.0-2' }}%
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <strong>Estado de Asistencia:</strong> {{ mensajeAsistencia }}
+    </ion-label>
+  </ion-item>
+
+  <ion-button (click)="guardarAsistencia()">Guardar Asistencia</ion-button>
+  <ion-button (click)="exportarAsistencia()">Descargar Excel</ion-button>
+</ion-content>

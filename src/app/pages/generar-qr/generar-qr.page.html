@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Generar QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="top-centered-container">
+    <h2 class="qr-title">QR de la clase</h2>
+
+    <!-- Contenedor para el rectángulo de progreso -->
+    <div class="progress-container">
+      <div class="progress-bar" [ngStyle]="{ width: progress + '%' }"></div>
+    </div>
+
+    <!-- Botón para reiniciar y simular el llenado -->
+    <ion-button (click)="resetAndStartFilling()" class="start-button">Generar nuevo codigo QR</ion-button>
+  </div>
+</ion-content>

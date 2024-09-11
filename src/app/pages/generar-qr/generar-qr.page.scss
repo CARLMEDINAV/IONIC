@@ -1,0 +1,41 @@
+.top-centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Centra horizontalmente */
+    justify-content: flex-start; /* Alinea en la parte superior */
+    height: 100%;              /* Ocupa toda la altura del contenido */
+    padding-top: 20px;        /* Ajusta el espacio superior */
+    text-align: center;       /* Centra el texto horizontalmente dentro del contenedor */
+  }
+  
+  .qr-title {
+    margin: 0;               /* Elimina el margen por defecto */
+    font-size: 24px;         /* Ajusta el tamaño del texto si es necesario */
+  }
+  
+  .escaneando {
+    margin-top: 10px;        /* Espacio entre los dos elementos de texto */
+    font-size: 18px;         /* Ajusta el tamaño del texto si es necesario */
+  }
+  
+  .progress-container {
+    width: 80%;              /* Ajusta el ancho para que ocupe el 80% del contenedor */
+    max-width: 500px;        /* Ajusta el ancho máximo del rectángulo */
+    height: 30px;            /* Ajusta la altura según sea necesario */
+    background-color: #e0e0e0; /* Color del fondo del rectángulo */
+    border-radius: 5px;     /* Bordes redondeados opcionales */
+    overflow: hidden;       /* Oculta el contenido que sobresale */
+    margin-top: 20px;       /* Espacio superior para el rectángulo */
+    position: relative;     /* Posición relativa para el contenido interno */
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: yellow; /* Color de la barra de progreso */
+    transition: width 0.5s ease; /* Transición suave para el llenado */
+    border-radius: 5px;     /* Bordes redondeados opcionales */
+  }
+  
+  .start-button {
+    margin-top: 20px;       /* Espacio superior para el botón */
+  }

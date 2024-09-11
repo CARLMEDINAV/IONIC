@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+      <ion-title>Acuerdos</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Texto antes del botón -->
+  <ion-text color="medium">
+    <h2 style="text-align: center; margin-bottom: 20px;">Términos de la Aplicación</h2>
+  </ion-text>
+
+  <!-- Botón para presentar el modal -->
+  <ion-button id="modal-trigger" expand="block" color="primary">Presentar Documento</ion-button>
+
+  <!-- Modal -->  
+  <ion-modal trigger="modal-trigger" #modal>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Términos y Condiciones</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <ion-icon name="document-text-outline" size="large" color="tertiary"></ion-icon>
+        </div>
+        <h3 style="text-align: center; margin-bottom: 20px;">Términos y Condiciones</h3>
+        <p style="text-align: justify;">
+          Por favor, lea estos términos y condiciones cuidadosamente antes de utilizar nuestra aplicación. Al acceder o utilizar nuestra aplicación, usted acepta estar sujeto a estos términos y condiciones. Si no está de acuerdo con alguno de estos términos, no debe utilizar la aplicación.
+        </p>
+        <h4>1. Uso de la Aplicación</h4>
+        <p style="text-align: justify;">
+          Usted se compromete a utilizar la aplicación únicamente para fines legales y de acuerdo con todas las leyes y regulaciones aplicables.
+        </p>
+        <h4>2. Propiedad Intelectual</h4>
+        <p style="text-align: justify;">
+          Todos los derechos de propiedad intelectual en la aplicación y su contenido pertenecen a nosotros o a nuestros licenciantes. Está prohibido reproducir, distribuir o utilizar cualquier parte de la aplicación sin nuestro consentimiento previo por escrito.
+        </p>
+        <h4>3. Modificaciones</h4>
+        <p style="text-align: justify;">
+          Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Cualquier cambio será efectivo al publicarse en la aplicación.
+        </p>
+        <h4>4. Responsabilidad</h4>
+        <p style="text-align: justify;">
+          No seremos responsables de ningún daño o pérdida que surja del uso o incapacidad para usar la aplicación, incluso si hemos sido informados de la posibilidad de dichos daños.
+        </p>
+        <h4>5. Contacto</h4>
+        <p style="text-align: justify; margin-bottom: 30px;">
+          Si tiene alguna pregunta sobre estos términos y condiciones, puede contactarnos a través de la información de contacto proporcionada en la aplicación.
+        </p>
+        
+        <!-- Casilla de verificación -->
+        <ion-item lines="none">
+          <ion-checkbox slot="start" [(ngModel)]="acceptedTerms" (ionChange)="onTermsChanged($event)" color="primary"></ion-checkbox>
+          <ion-label>He leído y acepto los términos y condiciones</ion-label>
+        </ion-item>
+
+        <!-- Botón para aceptar términos -->
+        <ion-button expand="block" color="success" [disabled]="!acceptedTerms" (click)="acceptTerms()">Aceptar</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

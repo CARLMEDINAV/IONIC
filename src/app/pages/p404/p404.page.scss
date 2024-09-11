@@ -1,0 +1,24 @@
+
+.not-found-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .not-found-container ion-icon {
+    font-size: 80px;
+  }
+  
+  .not-found-container h1 {
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+  
+  .not-found-container p {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    margin: 10px 0;
+  }
+  
+  .not-found-container ion-button {
+    margin-top: 20px;
+  }

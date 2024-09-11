@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Recuperar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="padding: 15px;">
+    <ion-list [inset]="true">
+      <ion-item>
+        <ion-input [(ngModel)]="usuario" placeholder="Ingrese Nombre de Usuario"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="recuperarContrasena()" style="margin-top: 25px;" color="warning">Recuperar</ion-button>
+    </ion-list>
+  </div>
+</ion-content>

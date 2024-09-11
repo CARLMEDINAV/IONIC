@@ -1,0 +1,22 @@
+.expandable-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .expandable-card ion-card-content {
+    overflow: hidden;
+  }
+  
+  .expandable-card .collapsed {
+    max-height: 100px; /* Ajusta la altura máxima para el estado contraído */
+    transition: max-height 0.3s ease;
+  }
+  
+  .expandable-card .expanded {
+    max-height: 500px; /* Ajusta la altura máxima para el estado expandido */
+    transition: max-height 0.3s ease;
+  }
+  
+  .additional-content {
+    margin-top: 10px; /* Espacio entre la información básica y la adicional */
+  }

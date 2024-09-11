@@ -1,0 +1,14 @@
+<ion-content [fullscreen]="true">
+  <div class="imagen">
+    <img src="../../../assets/img/Icon.png" alt="">
+  </div>
+  <div class="imagen">
+    <h1 style="font-family: 'Roboto', sans-serif;">
+      <!-- Estilos aplicados a cada parte del texto -->
+      <span style="color: blue;">Regist</span>
+      <span style="color: #FFD700;">APP</span>
+    </h1>
+    <ion-button id="open-loading" routerLink="/login">Espere un Momento...</ion-button>
+    <ion-loading trigger="open-loading" message="Iniciando RegistrAPP" duration="3000"></ion-loading>
+  </div>
+</ion-content>

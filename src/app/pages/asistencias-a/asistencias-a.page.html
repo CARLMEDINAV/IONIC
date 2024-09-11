@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home-a"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis asistencias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let card of cards" class="expandable-card" (click)="toggleCard(card.id)">
+    <ion-card-header>
+      <ion-card-title>{{ card.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content [ngClass]="{ 'expanded': card.id === expandedCardId, 'collapsed': card.id !== expandedCardId }">
+      <p>{{ card.basicContent }}</p>
+      <div *ngIf="card.id === expandedCardId" class="additional-content" [innerHTML]="card.additionalContent"></div>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>
+

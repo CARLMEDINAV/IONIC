@@ -1,0 +1,12 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura del viewport */
+  }
+  
+  img {
+    max-width: 90%;  /* Ajusta el tamaño máximo según tus necesidades */
+    max-height: 90%; /* Ajusta la altura máxima según tus necesidades */
+    object-fit: contain; /* Asegura que la imagen no se distorsione */
+  }
