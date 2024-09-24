@@ -43,6 +43,6 @@ export class GenerarQrPage implements OnInit {
       } else {
         clearInterval(interval); // Detiene el llenado cuando llega al 100%
       }
-    }, 500); // Ajusta el intervalo según sea necesario
+    }, 500); // Ajusta el intervalo según sea necesariohhhuh
   }
 }
