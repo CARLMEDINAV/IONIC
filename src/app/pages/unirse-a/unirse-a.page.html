@@ -11,10 +11,4 @@
   
   <video #video width="50%" height="auto"></video>
   <canvas #canvas width="440" height="280" style="display: none;"></canvas>
-  <ion-button (click)="takePicture()">Tomar Foto</ion-button>
-
-  <div *ngIf="imageUrl">
-    <h3>Foto tomada:</h3>
-    <img [src]="imageUrl" alt="Foto tomada" />
-  </div>
 </ion-content>
