@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
+
 interface Estudiante {
   nombre: string;
   apellido: string;  // Nueva propiedad
