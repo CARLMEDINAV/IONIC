@@ -23,4 +23,6 @@ export interface Item{
   id?:string;
   nombre:string;
   apellido:string;
+  correo:string;
+  clave:string;
 }

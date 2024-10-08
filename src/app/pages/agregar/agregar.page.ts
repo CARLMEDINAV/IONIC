@@ -9,7 +9,7 @@ import { CrudfirebaseService, Item } from 'src/app/servicio/crudfirebase.service
 })
 export class AgregarPage implements OnInit {
 
-  nuevo_item: Item = { nombre: '', apellido: '' };
+  nuevo_item: Item = { nombre: '', apellido: '',correo:'',clave:'' };
   listado_item: Item[] = [];
 
   constructor(

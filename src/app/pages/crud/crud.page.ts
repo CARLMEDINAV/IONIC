@@ -11,7 +11,7 @@ export class CrudPage implements OnInit {
 
   constructor(private CrudServ: CrudfirebaseService) { }
 
-  nuevo_item: Item = {nombre:'',apellido:''}
+  nuevo_item: Item = {nombre:'',apellido:'',clave:'',correo:''}
   listado_item: Item[]=[]
   ngOnInit() {
     this.listar()
