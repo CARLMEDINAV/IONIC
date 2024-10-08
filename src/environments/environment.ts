@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-
+production: false,
+firebaseConfig :{
+  apiKey: "AIzaSyDmaK_XySb-Mqtot-CNRd7y_g3vfCNeR1Y",
+  authDomain: "registrapp-4941c.firebaseapp.com",
+  projectId: "registrapp-4941c",
+  storageBucket: "registrapp-4941c.appspot.com",
+  messagingSenderId: "256169449061",
+  appId: "1:256169449061:web:886071467e6550e98c188c"
+}
   };
   // Import the functions you need from the SDKs you need
 // TODO: Add SDKs for Firebase products that you want to use

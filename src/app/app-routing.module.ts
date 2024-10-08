@@ -65,9 +65,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/animacion/animacion.module').then( m => m.AnimacionPageModule)
   },
   {
+    path: 'crud',
+    loadChildren: () => import('./pages/crud/crud.module').then( m => m.CrudPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/p404/p404.module').then( m => m.P404PageModule)
   },
+
   
 
 

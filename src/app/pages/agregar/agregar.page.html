@@ -3,6 +3,7 @@
     <ion-title style="text-align: center;">Registrar Cuenta Duoc</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true">
   <!-- Contenedor para centrar el logo -->
   <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
@@ -13,17 +14,13 @@
   <div style="margin-top: 30px; padding: 25px; display: flex; align-items: center; justify-content: center; width: 100%;">
     <ion-list style="width: 100%; max-width: 400px;">
       <ion-item>
-        <ion-input label="Usuario:" placeholder="Ingrese Nombre" type="user"  [(ngModel)]="nombre"></ion-input>
+        <ion-input [(ngModel)]="nuevo_item.nombre" label="Nombre" placeholder="Ingrese nombre"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input label="Apellido:" placeholder="Ingrese su Apellido"  [(ngModel)]="apellido"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input  type="mail" label="Correo:" placeholder="Ingrese Correo"  [(ngModel)]="correo"></ion-input>
+        <ion-input [(ngModel)]="nuevo_item.apellido" label="Apellido" placeholder="Ingrese apellido"></ion-input>
       </ion-item>
       <ion-button expand="block" (click)="grabar()" style="margin-top: 25px;" color="warning">Finalizar Registro</ion-button>
       <ion-button expand="block" (click)="volver()" style="margin-top: 25px;" color="warning">Regresar</ion-button>
-      i
     </ion-list>
   </div>
 </ion-content>

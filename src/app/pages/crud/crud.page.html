@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>CRUD Item en FireBase</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="padding: 10px;">
+    <ion-input [(ngModel)]="nuevo_item.nombre" label="Nombre" placeholder="Ingrese nombre"></ion-input>
+    <ion-input [(ngModel)]="nuevo_item.apellido" label="Apellido" placeholder="Ingrese apellido"></ion-input>
+    <ion-button (click)="grabar()">Grabar</ion-button>
+  </div>
+  
+  <!-- <div>
+    <ion-list>
+      <ion-item *ngFor="let item of listado_item">
+        {{item.nombre}} <ion-button>Borrar</ion-button>
+      </ion-item>
+    </ion-list>
+  </div> -->
+  <div style="padding: 10px;">
+    <ion-grid>
+      <ion-row *ngFor="let item of listado_item">
+        <ion-col>{{item.nombre}} {{item.apellido}} </ion-col>
+        <ion-col> <ion-button>Borrar</ion-button> </ion-col>        
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
