@@ -16,6 +16,12 @@ crearItem(item : Item){
 listarItems():Observable<Item[]> {
   return this.firestore.collection<Item>('item').valueChanges({idField:'id'})
 }
+eliminar(id:any){
+  return this.firestore.collection('item').doc(id).delete()
+}
+modificar(id:any,item:Item){
+  return this.firestore.collection('item').doc(id).update(item)
+}
 }
 
 

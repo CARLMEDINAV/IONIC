@@ -13,6 +13,13 @@ export class CrudPage implements OnInit {
 
   nuevo_item: Item = {nombre:'',apellido:'',clave:'',correo:''}
   listado_item: Item[]=[]
+  item_mod: Item = {id:'',nombre:'',apellido:'',clave:'',correo:''}
+
+  sw:boolean=false  //flag(banderitas)
+  sw2:boolean=true  //flag(banderitas)
+
+
+
   ngOnInit() {
     this.listar()
   }
@@ -27,6 +34,35 @@ export class CrudPage implements OnInit {
   listar(){
     this.CrudServ.listarItems().subscribe(data=>{
       this.listado_item=data
+    })
+  }
+
+  eliminar(id:any){
+    this.CrudServ.eliminar(id).then(()=>{
+      alert("elimino")
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  modificar(item: Item){
+    this.item_mod=item
+    this.sw=true
+    this.sw2=false
+  }
+
+  cancelar(){
+    this.sw=false
+    this.sw2=true
+  }
+
+  actualizar(){
+    this.CrudServ.modificar(this.item_mod.id, this.item_mod)
+    .then(()=>{
+      alert("modifico");
+      this.cancelar();
+    }).catch((err)=>{
+      console.log(err)
     })
   }
 }
