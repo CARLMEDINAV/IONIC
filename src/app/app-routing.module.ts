@@ -69,10 +69,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/crud/crud.module').then( m => m.CrudPageModule)
   },
   {
+    path: 'crud-api',
+    loadChildren: () => import('./pages/crud-api/crud-api.module').then( m => m.CrudApiPageModule)
+  },
+
+  {
     path: '**',
     loadChildren: () => import('./pages/p404/p404.module').then( m => m.P404PageModule)
   },
-
+ 
   
 
 
