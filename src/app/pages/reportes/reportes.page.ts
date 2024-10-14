@@ -1,12 +1,13 @@
 import { Component, OnInit } from "@angular/core";
+import { CrudfirebaseService } from 'src/app/servicio/crudfirebase.service'; // Asegúrate de importar tu servicio
 import * as XLSX from 'xlsx';
 
 interface Estudiante {
   nombre: string;
-  Clases_Asistidas: number; // Mantener consistencia con el nombre
+  apellido: string;
+  Clases_Asistidas: number;
   porcentajeAsistencia: number;
   estado: string;
-  apellido : string;
 }
 
 @Component({
@@ -17,23 +18,28 @@ interface Estudiante {
 export class ReportesPage implements OnInit {
   estudiantes: Estudiante[] = [];
 
-  constructor() { }
-
-  cargarEstudiantes() {
-    const estudiantesGuardados = localStorage.getItem('estudiantes');
-    if (estudiantesGuardados) {
-      this.estudiantes = JSON.parse(estudiantesGuardados).map((estudiante: any) => ({
-        nombre: estudiante.nombre,
-        apellido: estudiante.apellido,
-        Clases_Asistidas: estudiante.clasesAsistidas || estudiante.clasesAsistidas,
-        estado: estudiante.estado || ''
-      }));
-    }
-  }
+  constructor(private crudServ: CrudfirebaseService) { } // Inyectar el servicio
 
   ngOnInit() {
     this.cargarEstudiantes();
   }
+
+  cargarEstudiantes() {
+    this.crudServ.listarItems().subscribe(data => {
+      this.estudiantes = data.map((estudiante: any) => ({
+        nombre: estudiante.nombre,
+        apellido: estudiante.apellido || '',
+        Clases_Asistidas: estudiante.clasesAsistidas || 0,
+        estado: estudiante.estado || '',
+        porcentajeAsistencia: this.calcularPorcentajeAsistencia(estudiante) // Calcula el porcentaje
+      }));
+    });
+  }
+
+  calcularPorcentajeAsistencia(estudiante: any): number {
+    // Aquí puedes implementar la lógica para calcular el porcentaje de asistencia
+    const totalClases = estudiante.clasesAsistidas || 0; 
+    return totalClases > 0 ? (estudiante.asistenciaCount / totalClases) * 100 : 0; }
 
   exportarAsistencia() {
     const ws = XLSX.utils.json_to_sheet(this.estudiantes);
