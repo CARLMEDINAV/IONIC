@@ -14,7 +14,7 @@ export class GenerarQrPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.generateQRCode('https://ionic-hazel.vercel.app/agregar'); // Genera un QR inicial
+    this.generateQRCode('https://proyecto-a8njo3cr1-ionicss.vercel.app/agregar'); // Genera un QR inicial
   }
 
   // Función para generar un nuevo código QR
@@ -32,7 +32,7 @@ export class GenerarQrPage implements OnInit {
   resetAndStartFilling() {
     this.progress = 0; // Reinicia el progreso a 0
     this.startFilling(); // Comienza el llenado
-    this.generateQRCode('https://ionic-hazel.vercel.app/agregar'); // Genera un nuevo código QR
+    this.generateQRCode('https://proyecto-a8njo3cr1-ionicss.vercel.app/agregar'); // Genera un nuevo código QR
   }
 
   // Función para iniciar el llenado del rectángulo
