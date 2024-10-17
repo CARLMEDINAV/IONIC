@@ -6,7 +6,7 @@ from rest_framework import serializers
 class UsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model= Usuario
-        fields=['nombre','apellido']
+        fields= "__all__"
 
 
 class EstudiantesSerializer(serializers.ModelSerializer): 

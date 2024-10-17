@@ -6,24 +6,21 @@
 
 <ion-content [fullscreen]="true">
   <div class="button-container">
-    <div class="button-wrapper">
-      <ion-button class="styled-button" style="border-radius: 20px;" expand="full" (click)="recuperar1()">Recuperar Usuarios</ion-button>
-      <ion-button class="styled-button" expand="full" (click)="recuperar2()">Recuperar Estudiantes</ion-button>
-    </div>
+    <ion-button class="styled-button" (click)="recuperar1()">Recuperar Profesores</ion-button>
+    <ion-button class="styled-button" (click)="recuperar2()">Recuperar Estudiantes</ion-button>
   </div>
 
   <ion-list *ngIf="mostrarUsuarios">
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>Usuarios</ion-label>
+        <ion-label>Profesores</ion-label>
       </ion-item-divider>
       <ion-card *ngFor="let usuario of usuarios">
         <ion-card-header>
-          <ion-card-title>{{ usuario.nombre }}</ion-card-title>
+          <ion-card-title>{{ usuario.nombre }} {{ usuario.apellido }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p>Email: {{ usuario.email }}</p>
-          <p>Teléfono: {{ usuario.telefono }}</p>
+          <p>Email: {{ usuario.correo }}</p>
         </ion-card-content>
       </ion-card>
     </ion-item-group>
@@ -36,11 +33,10 @@
       </ion-item-divider>
       <ion-card *ngFor="let estudiante of estudiantes">
         <ion-card-header>
-          <ion-card-title>{{ estudiante.nombre }}</ion-card-title>
+          <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p>Email: {{ estudiante.email }}</p>
-          <p>Curso: {{ estudiante.curso }}</p>
+          <p>Email: {{ estudiante.correo }}</p>
         </ion-card-content>
       </ion-card>
     </ion-item-group>
