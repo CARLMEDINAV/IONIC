@@ -1,22 +1,17 @@
-.expandable-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.expandable-card ion-card-content {
-  overflow: hidden;
-}
-
-.expandable-card .collapsed {
-  max-height: 100px; /* Ajusta la altura máxima para el estado contraído */
-  transition: max-height 0.3s ease;
-}
-
-.expandable-card .expanded {
-  max-height: 500px; /* Ajusta la altura máxima para el estado expandido */
-  transition: max-height 0.3s ease;
-}
-
-.additional-content {
-  margin-top: 10px; /* Espacio entre la información básica y la adicional */
+.progress-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0f7e9;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  font-size: 24px;
+  color: rgb(255, 0, 183);
+  border: 5px solid rgb(208, 255, 0);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
