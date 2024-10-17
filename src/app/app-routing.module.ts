@@ -72,11 +72,23 @@ const routes: Routes = [
     path: 'crud-api',
     loadChildren: () => import('./pages/crud-api/crud-api.module').then( m => m.CrudApiPageModule)
   },
+  {
+    path: 'mis-asignaturas',
+    loadChildren: () => import('./pages/mis-asignaturas/mis-asignaturas.module').then( m => m.MisAsignaturasPageModule)
+  },
+  {
+    path: 'matematicas',
+    loadChildren: () => import('./matematicas/matematicas.module').then( m => m.MatematicasPageModule)
+  },
 
   {
     path: '**',
     loadChildren: () => import('./pages/p404/p404.module').then( m => m.P404PageModule)
   },
+ 
+
+
+
  
   
 
