@@ -13,32 +13,46 @@
   <ion-list *ngIf="mostrarUsuarios">
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>Profesores</ion-label>
+        <ion-label style="color: aliceblue;">Profesores</ion-label>
       </ion-item-divider>
-      <ion-card *ngFor="let usuario of usuarios">
-        <ion-card-header>
-          <ion-card-title>{{ usuario.nombre }} {{ usuario.apellido }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Email: {{ usuario.correo }}</p>
-        </ion-card-content>
-      </ion-card>
+      <ng-container *ngIf="usuarios.length; else noUsuarios">
+        <ion-card *ngFor="let usuario of usuarios">
+          <ion-card-header>
+            <ion-card-title>{{ usuario.nombre }} {{ usuario.apellido }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Email: {{ usuario.correo }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+      <ng-template #noUsuarios>
+        <ion-item>
+          <ion-label>No hay cuentas registradas</ion-label>
+        </ion-item>
+      </ng-template>
     </ion-item-group>
   </ion-list>
 
   <ion-list *ngIf="mostrarEstudiantes">
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>Estudiantes</ion-label>
+        <ion-label style="color: aliceblue;">Estudiantes</ion-label>
       </ion-item-divider>
-      <ion-card *ngFor="let estudiante of estudiantes">
-        <ion-card-header>
-          <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Email: {{ estudiante.correo }}</p>
-        </ion-card-content>
-      </ion-card>
+      <ng-container *ngIf="estudiantes.length; else noEstudiantes">
+        <ion-card *ngFor="let estudiante of estudiantes">
+          <ion-card-header>
+            <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Email: {{ estudiante.correo }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+      <ng-template #noEstudiantes>
+        <ion-item>
+          <ion-label>No hay cuentas registradas</ion-label>
+        </ion-item>
+      </ng-template>
     </ion-item-group>
   </ion-list>
 </ion-content>
