@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lista de Cursos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <!-- Curso 1: Matemáticas -->
+    <ion-item>
+      <ion-label>
+        <h2>Matemáticas</h2>
+        <h3>Ingeniería en Informática</h3>
+        <p>Asistencia: 100%</p>
+        <p>Clases dictadas: 14 de 34</p>
+        <p>Presente: 14</p>
+        <p>Ausente: 0</p>
+        <p>Justificadas: 0</p>
+      </ion-label>
+      <ion-button fill="clear" slot="end" (click)="verDetalles('MAT4140-011D')">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Curso 2: Calidad de Software -->
+    <ion-item>
+      <ion-label>
+        <h2>Calidad de Software</h2>
+        <h3>Ingeniería en Informática</h3>
+        <p>Asistencia: 85%</p>
+        <p>Clases dictadas: 10 de 34</p>
+        <p>Presente: 9</p>
+        <p>Ausente: 1</p>
+        <p>Justificadas: 0</p>
+      </ion-label>
+      <ion-button fill="clear" slot="end" (click)="verDetalles('CSY4111-010D')">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Curso 3: Redes de Computadores -->
+    <ion-item>
+      <ion-label>
+        <h2>Redes de Computadores</h2>
+        <h3>Ingeniería en Informática</h3>
+        <p>Asistencia: 90%</p>
+        <p>Clases dictadas: 15 de 34</p>
+        <p>Presente: 13</p>
+        <p>Ausente: 2</p>
+        <p>Justificadas: 1</p>
+      </ion-label>
+      <ion-button fill="clear" slot="end" (click)="verDetalles('NET4201-011D')">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Agrega más cursos aquí -->
+
+  </ion-list>
+</ion-content>

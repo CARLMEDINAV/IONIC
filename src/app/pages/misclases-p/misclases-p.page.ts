@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./misclases-p.page.scss'],
 })
 export class MisclasesPPage implements OnInit {
+  navCtrl: any;
 
   constructor() { }
 
@@ -62,5 +63,12 @@ export class MisclasesPPage implements OnInit {
     this.expandedCardId = this.expandedCardId === id ? null : id;
   }
 
+
+
+  // Función para manejar la navegación o acción al hacer clic en la flecha
+  verDetalles(codigoAsignatura: string) {
+    // Puedes cambiar esta navegación según tu ruta o lógica de la app
+    this.navCtrl.navigateForward(`/matematicas`);
   
+}
 }

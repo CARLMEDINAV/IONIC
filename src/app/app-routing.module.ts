@@ -78,13 +78,19 @@ const routes: Routes = [
   },
   {
     path: 'matematicas',
-    loadChildren: () => import('./matematicas/matematicas.module').then( m => m.MatematicasPageModule)
+    loadChildren: () => import('./pages/matematicas/matematicas.module').then( m => m.MatematicasPageModule)
+  },
+  {
+    path: 'camara',
+    loadChildren: () => import('./pages/camara/camara.module').then( m => m.CamaraPageModule)
   },
 
   {
     path: '**',
     loadChildren: () => import('./pages/p404/p404.module').then( m => m.P404PageModule)
   },
+
+
  
 
 

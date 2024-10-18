@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Abrir Cámara</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <video #video width="100%" height="auto" autoplay></video>
+  <ion-button expand="full" (click)="capturarFoto()">Tomar Foto</ion-button>
+  <canvas #canvas style="display:none;"></canvas>
+  <div *ngIf="fotoUrl">
+    <img [src]="fotoUrl" />
+  </div>
+</ion-content>

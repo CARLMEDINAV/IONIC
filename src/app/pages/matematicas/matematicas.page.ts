@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./matematicas.page.scss'],
 })
 export class MatematicasPage implements OnInit {
+  navCtrl: any;
 
   constructor() { }
 
   ngOnInit() {
   }
+  verDetalles(cursoId: string) {
+    // Navegar a la página de detalles del curso
+    this.navCtrl.navigateForward(`/curso-detalle/${cursoId}`);
+  }
+
 
 }

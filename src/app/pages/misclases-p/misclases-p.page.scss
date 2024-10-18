@@ -1,22 +1,34 @@
-.expandable-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* Estilos personalizados para las tarjetas más pequeñas */
+.small-card {
+  width: 100%;
+  /*Ajustaelanchodelastarjetas*/max-width: 300px;
+  /*Estableceunanchomáximo*/margin: 10px auto;
+  /*Centrandolastarjetashorizontalmente*/padding: 10px;
+  /*Ajustandoelpaddingdentrodelatarjeta*/font-size: 0.9rem;
+  /*Reduciendoeltamañodelafuente*/box-shadow: 0px 2px 10px rgba(235, 232, 232, 0.1);
+  /*Sombraligera*/border-radius: 8px;
+  /*Redondealosbordes*/margin-bottom: 20px;
+  color: rgb(255, 255, 255);
 }
 
-.expandable-card ion-card-content {
-  overflow: hidden;
+/* Estilo para los títulos de las tarjetas */
+.small-card ion-card-title {
+  font-size: 1.1rem;         /* Título de tamaño más pequeño */
+  font-weight: bold;         /* Mantiene el título en negrita */
 }
 
-.expandable-card .collapsed {
-  max-height: 100px; /* Ajusta la altura máxima para el estado contraído */
-  transition: max-height 0.3s ease;
+/* Estilo para los subtítulos de las tarjetas */
+.small-card ion-card-subtitle {
+  font-size: 0.85rem;        /* Tamaño más pequeño para el subtítulo */
+  color: #ffdd00;            /* Color más suave para el subtítulo */
 }
 
-.expandable-card .expanded {
-  max-height: 500px; /* Ajusta la altura máxima para el estado expandido */
-  transition: max-height 0.3s ease;
+/* Ajuste para el contenido de las tarjetas */
+.small-card ion-card-header {
+  padding: 5px 10px;         /* Menos padding en el encabezado */
 }
 
-.additional-content {
-  margin-top: 10px; /* Espacio entre la información básica y la adicional */
+/* Espaciado del contenido en pantalla completa */
+ion-content {
+  padding: 20px;             /* Espacio alrededor del contenido del ion-content */
 }

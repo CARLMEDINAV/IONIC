@@ -1,0 +1,45 @@
+ion-content {
+  .ion-padding {
+    background-color: #f9f9f9; // Color de fondo suave para el contenido
+  }
+
+  ion-list {
+    ion-item {
+      margin-bottom: 30px; // Espacio entre los items de la lista
+      background-color: #ffffff; // Color de fondo blanco para los items
+      border-radius: 8px; // Esquinas redondeadas
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra sutil para darle profundidad
+      transition: transform 0.2s; // Transición suave para efectos al pasar el ratón
+
+      &:hover {
+        transform: scale(1.02); // Efecto de escala al pasar el ratón
+      }
+
+      ion-label {
+        h2 {
+          font-size: 1.2rem; // Tamaño de fuente para el título
+          color: #f7f7f7; // Color del texto del título
+          margin-bottom: 4px; // Espacio inferior del título
+        }
+
+        h3 {
+          font-size: 1rem; // Tamaño de fuente para el subtítulo
+          color: #f7f3f3; // Color del texto del subtítulo
+          margin-bottom: 8px; // Espacio inferior del subtítulo
+        }
+
+        p {
+          font-size: 0.9rem; // Tamaño de fuente para el texto
+          color: #ffffff; // Color del texto
+          margin: 2px 0; // Margen superior e inferior
+        }
+      }
+
+      ion-button {
+        ion-icon {
+          color: #007bff; // Color del icono del botón
+        }
+      }
+    }
+  }
+}
