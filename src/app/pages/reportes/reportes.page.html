@@ -3,28 +3,26 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Reporte de asistencias </ion-title>
+    <ion-title>Reporte de asistencias</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
   <ion-list [inset]="true">
-    <ion-item-sliding *ngFor="let estudiante of estudiantes">
+    <ion-item-sliding *ngFor="let estudiante of estudiantes" style="padding: 5px;">
       <ion-item>
         <ion-avatar aria-hidden="true" slot="start">
           <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
         <ion-label>
-          {{estudiante.nombre}} {{ estudiante.apellido }} 
-          <br />
-          <strong>Clases Asistidas:</strong> {{ estudiante.Clases_Asistidas }}
-          <br />
-          <strong>Estado:</strong> {{ estudiante.estado}}
+          {{estudiante.nombre}} {{estudiante.apellido}}
+          <div>
+            <strong>Estado:</strong> Presente
+          </div>
         </ion-label>
       </ion-item>
     </ion-item-sliding>
   </ion-list>
 
   <ion-button style="padding: 10px;" (click)="exportarAsistencia()">Descargar</ion-button>
-  
 </ion-content>

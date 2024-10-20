@@ -5,8 +5,6 @@ import * as XLSX from 'xlsx';
 interface Estudiante {
   nombre: string;
   apellido: string;
-  Clases_Asistidas: number;
-  porcentajeAsistencia: number;
   estado: string;
 }
 
@@ -29,9 +27,8 @@ export class ReportesPage implements OnInit {
       this.estudiantes = data.map((estudiante: any) => ({
         nombre: estudiante.nombre,
         apellido: estudiante.apellido || '',
-        Clases_Asistidas: estudiante.clasesAsistidas || 0,
-        estado: estudiante.estado || '',
-        porcentajeAsistencia: this.calcularPorcentajeAsistencia(estudiante) // Calcula el porcentaje
+        estado: estudiante.estado || 'Presente',
+      
       }));
     });
   }

@@ -1,22 +1,42 @@
-.expandable-card {
-    cursor: pointer;
-    transition: all 0.3s ease;
+// reportes.page.scss
+
+ion-content {
+  background-color: #f8f9fa; // Fondo claro
+  padding: 16px; // Padding general
+}
+
+ion-list {
+  margin-top: 20px; // Margen superior para separar de la cabecera
+}
+
+ion-item {
+  background-color: #ffffff; // Fondo blanco para cada elemento
+  border-radius: 8px; // Bordes redondeados
+  box-shadow: 0 2px 4px rgba(232, 226, 226, 0.1); // Sombra para un efecto de elevación
+  margin-bottom: 10px; // Espacio entre elementos
+  transition: transform 0.2s; // Transición para efectos al pasar el ratón
+
+  &:hover {
+    transform: translateY(-2px); // Efecto al pasar el ratón
   }
-  
-  .expandable-card ion-card-content {
-    overflow: hidden;
+}
+
+ion-avatar {
+  margin-right: 10px; // Espacio entre el avatar y el texto
+}
+
+strong {
+  color: #007bff; // Color para el texto fuerte
+}
+
+ion-button {
+  background-color: #007bff; // Color de fondo del botón
+  color: #ffffff; // Color de texto
+  border-radius: 5px; // Bordes redondeados
+  width: 100%; // Botón ocupa todo el ancho
+  margin-top: 20px; // Margen superior para separación
+
+  &:hover {
+    background-color: darken(#007bff, 10%); // Efecto hover para el botón
   }
-  
-  .expandable-card .collapsed {
-    max-height: 100px; /* Ajusta la altura máxima para el estado contraído */
-    transition: max-height 0.3s ease;
-  }
-  
-  .expandable-card .expanded {
-    max-height: 500px; /* Ajusta la altura máxima para el estado expandido */
-    transition: max-height 0.3s ease;
-  }
-  
-  .additional-content {
-    margin-top: 10px; /* Espacio entre la información básica y la adicional */
-  }
+}

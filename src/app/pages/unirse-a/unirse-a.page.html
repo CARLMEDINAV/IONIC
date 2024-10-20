@@ -1,14 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home-a"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Tomar Foto</ion-title>
+    <ion-title>Escanear QR</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
-  <video #video width="50%" height="auto"></video>
-  <canvas #canvas width="440" height="280" style="display: none;"></canvas>
+  <div class="ion-padding">
+    <ion-button (click)="startScan()" [disabled]="!isSupported">
+      Escanear Código QR
+    </ion-button>
+
+    <div *ngIf="scannedQR">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Resultado del QR Escaneado</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{ scannedQR }}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

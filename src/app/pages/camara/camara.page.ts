@@ -17,12 +17,16 @@ export class CamaraPage {
   }
 
   async iniciarCamara() {
+    console.log('Intentando iniciar la cámara...');
     if (this.video) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        console.log('Cámara iniciada con éxito.');
         this.video.nativeElement.srcObject = stream;
+        this.video.nativeElement.play(); // Asegúrate de que la cámara comience a reproducirse
       } catch (error) {
         console.error('Error al acceder a la cámara:', error);
+        alert('No se pudo acceder a la cámara. Asegúrate de que está conectada y que has dado permisos.');
       }
     }
   }
@@ -40,4 +44,4 @@ export class CamaraPage {
       }
     }
   }
-}  
+}
