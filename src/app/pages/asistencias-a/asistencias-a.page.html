@@ -1,63 +1,69 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/home-a"></ion-back-button>
     </ion-buttons>
-    <ion-title>Arquitectura</ion-title>
+    <ion-title>Mis asistencias</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <!-- Información de la asignatura -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Ingeniería en Informática</ion-card-title>
-      <ion-card-subtitle>ASY4131-010D</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+  <ng-container *ngFor="let card of cards">
+    <!-- Tarjeta para cada asignatura -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ card.title }}</ion-card-title>
+      </ion-card-header>
 
-  <!-- Asistencia -->
-  <ion-segment value="asistencia">
-    <ion-segment-button value="asistencia">
-      <ion-label>Asistencia</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+      <ion-card-content>
+        <ion-segment value="asistencia">
+          <ion-segment-button value="asistencia">
+            <ion-label>Asistencia</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Porcentaje de Asistencia</ion-card-title>
-      <ion-card-subtitle>16/10/2024</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="progress-circle">
-        <span>100%</span>
-      </div>
-      <p>Asistencia mínima requerida: 70%</p>
-      <ion-button fill="clear" size="small" color="primary">Ver cálculo</ion-button>
-    </ion-card-content>
-  </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Porcentaje de Asistencia</ion-card-title>
+            <ion-card-subtitle>{{ getCurrentDate() }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="progress-circle">
+              <span>{{ card.additionalContent.split(' ')[0] }}</span> <!-- Extrae el porcentaje -->
+            </div>
+            <p>Asistencia mínima requerida: 70%</p>
+            <ion-button fill="clear" size="small" color="primary">Ver cálculo</ion-button>
+          </ion-card-content>
+        </ion-card>
 
-  <!-- Detalle de clases -->
-  <ion-item>
-    <ion-label>Clases dictadas</ion-label>
-    <ion-badge slot="end" color="primary">18 de 34</ion-badge>
-  </ion-item>
+        <!-- Detalle de clases -->
+        <ion-item>
+          <ion-label>Clases dictadas</ion-label>
+          <ion-badge slot="end" color="primary">{{ card.basicContent }}</ion-badge>
+        </ion-item>
 
-  <ion-item>
-    <ion-label>Presente</ion-label>
-    <ion-badge slot="end" color="success">18</ion-badge>
-  </ion-item>
+        <ion-item>
+          <ion-label>Presente</ion-label>
+          <ion-badge slot="end" color="success">{{ card.additionalContent.split(' ')[0] === '100%' ? '7' : '6' }}</ion-badge>
+        </ion-item>
 
-  <ion-item>
-    <ion-label>Ausente</ion-label>
-    <ion-badge slot="end">0</ion-badge>
-  </ion-item>
+        <ion-item>
+          <ion-label>Ausente</ion-label>
+          <ion-badge slot="end">0</ion-badge>
+        </ion-item>
 
-  <ion-item>
-    <ion-label>Justificadas</ion-label>
-    <ion-badge slot="end">0</ion-badge>
-    <ion-button fill="clear" size="small" color="primary" slot="end">Ver detalle</ion-button>
-  </ion-item>
+        <ion-item>
+          <ion-label>Justificadas</ion-label>
+          <ion-badge slot="end">0</ion-badge>
+          <ion-button fill="clear" size="small" color="primary" slot="end">Ver detalle</ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Separador entre asignaturas -->
+    <ion-item-divider></ion-item-divider>
+  </ng-container>
 
 </ion-content>
+

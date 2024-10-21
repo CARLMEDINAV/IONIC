@@ -30,8 +30,8 @@ export class AsistenciasAPage implements OnInit {
     {
       id: 3,
       title: 'Doctrina social de la iglesia ',
-      basicContent: '3 de 3 clases',
-      additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
+      basicContent: '1 de 4 clases',
+      additionalContent: '25% de asistencias a este curso (sin riesgo de RI)'
     },
     {
       id: 4,
@@ -63,5 +63,12 @@ export class AsistenciasAPage implements OnInit {
   // Función para alternar el estado expandido de una tarjeta
   toggleCard(id: number) {
     this.expandedCardId = this.expandedCardId === id ? null : id;
+
   }
+
+  getCurrentDate(): string {
+    const date = new Date();
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; // Formato: DD/MM/YYYY
+  }
+  
 }
