@@ -20,44 +20,34 @@
         <p>Ausente: 0</p>
         <p>Justificadas: 0</p>
       </ion-label>
-      <ion-button fill="clear" slot="end" (click)="verDetalles('MAT4140-011D')">
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-      </ion-button>
     </ion-item>
 
-    <!-- Curso 2: Calidad de Software -->
-    <ion-item>
+    <!-- Contenedor para el código QR -->
+    <div class="qr-container">
+      <h2 class="qr-title">QR de la clase</h2>
+      <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="Código QR" class="qr-image">
+      <ion-spinner *ngIf="!qrCodeDataUrl" name="crescent"></ion-spinner> <!-- Spinner mientras se genera el QR -->
+    </div>
+
+    <!-- Contenedor para el rectángulo de progreso -->
+    <div class="progress-container">
+      <div class="progress-bar" [ngStyle]="{ width: progress + '%' }"></div>
+    </div>
+
+    <!-- Botón para generar un nuevo código QR -->
+
+
+    <!-- Información de los estudiantes -->
+    <ion-item *ngFor="let estudiante of estudiantes">
       <ion-label>
-        <h2>Calidad de Software</h2>
-        <h3>Ingeniería en Informática</h3>
-        <p>Asistencia: 85%</p>
-        <p>Clases dictadas: 10 de 34</p>
-        <p>Presente: 9</p>
-        <p>Ausente: 1</p>
-        <p>Justificadas: 0</p>
+        {{estudiante.nombre}} {{estudiante.apellido}}
+        <div>
+          <strong>Estado:</strong> {{estudiante.estado}} <br>
+          <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" aria-label="Eliminar estudiante">
+            Eliminar
+          </ion-button>
+        </div>
       </ion-label>
-      <ion-button fill="clear" slot="end" (click)="verDetalles('CSY4111-010D')">
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-      </ion-button>
     </ion-item>
-
-    <!-- Curso 3: Redes de Computadores -->
-    <ion-item>
-      <ion-label>
-        <h2>Redes de Computadores</h2>
-        <h3>Ingeniería en Informática</h3>
-        <p>Asistencia: 90%</p>
-        <p>Clases dictadas: 15 de 34</p>
-        <p>Presente: 13</p>
-        <p>Ausente: 2</p>
-        <p>Justificadas: 1</p>
-      </ion-label>
-      <ion-button fill="clear" slot="end" (click)="verDetalles('NET4201-011D')">
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </ion-item>
-
-    <!-- Agrega más cursos aquí -->
-
   </ion-list>
 </ion-content>

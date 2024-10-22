@@ -24,20 +24,20 @@ export class AsistenciasAPage implements OnInit {
     {
       id: 2,
       title: 'Calidad de software',
-      basicContent: '6 de 7 clases',
-      additionalContent: '85.7% de asistencias a este curso (riesgo bajo de RI)'
+      basicContent: '7 de 7 clases',
+      additionalContent: '85.2% de asistencias a este curso (riesgo bajo de RI)'
     },
     {
       id: 3,
       title: 'Doctrina social de la iglesia ',
-      basicContent: '1 de 4 clases',
+      basicContent: '6 de 7 clases',
       additionalContent: '25% de asistencias a este curso (sin riesgo de RI)'
     },
     {
       id: 4,
       title: 'Estadistica descriptiva',
-      basicContent: '8 de 8 clases',
-      additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
+      basicContent: '7 de 7 clases',
+      additionalContent: '87,5% de asistencias a este curso (sin riesgo de RI)'
     },
     {
       id: 5,
@@ -48,7 +48,7 @@ export class AsistenciasAPage implements OnInit {
     {
       id: 6,
       title: 'Proceso de portafolio',
-      basicContent: '1 de 1 clases',
+      basicContent: '6 de 7 clases',
       additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
     },
     {
