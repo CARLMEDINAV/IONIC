@@ -1,53 +1,11 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Lista de Cursos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
-  <ion-list>
-    <!-- Curso 1: Matemáticas -->
-    <ion-item>
-      <ion-label>
-        <h2>Matemáticas</h2>
-        <h3>Ingeniería en Informática</h3>
-        <p>Asistencia: 100%</p>
-        <p>Clases dictadas: 14 de 34</p>
-        <p>Presente: 14</p>
-        <p>Ausente: 0</p>
-        <p>Justificadas: 0</p>
-      </ion-label>
-    </ion-item>
-
-    <!-- Contenedor para el código QR -->
-    <div class="qr-container">
-      <h2 class="qr-title">QR de la clase</h2>
-      <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="Código QR" class="qr-image">
-      <ion-spinner *ngIf="!qrCodeDataUrl" name="crescent"></ion-spinner> <!-- Spinner mientras se genera el QR -->
+<ion-item *ngFor="let estudiante of estudiantes">
+  <ion-label>
+    {{estudiante.nombre}} {{estudiante.apellido}}
+    <div>
+      <strong>Estado:</strong> {{estudiante.estado || 'Sin registrar'}}
+      <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" aria-label="Eliminar estudiante">
+        Eliminar
+      </ion-button>
     </div>
-
-    <!-- Contenedor para el rectángulo de progreso -->
-    <div class="progress-container">
-      <div class="progress-bar" [ngStyle]="{ width: progress + '%' }"></div>
-    </div>
-
-    <!-- Botón para generar un nuevo código QR -->
-
-
-    <!-- Información de los estudiantes -->
-    <ion-item *ngFor="let estudiante of estudiantes">
-      <ion-label>
-        {{estudiante.nombre}} {{estudiante.apellido}}
-        <div>
-          <strong>Estado:</strong> {{estudiante.estado}} <br>
-          <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" aria-label="Eliminar estudiante">
-            Eliminar
-          </ion-button>
-        </div>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>
+  </ion-label>
+</ion-item>

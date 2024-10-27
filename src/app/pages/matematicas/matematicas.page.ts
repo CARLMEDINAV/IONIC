@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { CrudfirebaseService } from 'src/app/servicio/crudfirebase.service';
+import { CrudfirebaseService, Item } from 'src/app/servicio/crudfirebase.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Estudiante {
   id: string; // Asegúrate de que esto sea el ID único del estudiante
@@ -19,7 +20,10 @@ export class MatematicasPage implements OnInit {
   progress = 0;
   estudiantes: Estudiante[] = [];
 
-  constructor(private crudServ: CrudfirebaseService) {}
+  constructor(
+    private crudServ: CrudfirebaseService,
+    private firestore: AngularFirestore // Importa AngularFirestore para guardar asistencia
+  ) {}
 
   ngOnInit() {
     this.generateQRCode('https://ionics.vercel.app/agregar');
@@ -67,5 +71,18 @@ export class MatematicasPage implements OnInit {
   calcularPorcentajeAsistencia(estudiante: any): number {
     const totalClases = estudiante.clasesAsistidas || 0; 
     return totalClases > 0 ? (estudiante.asistenciaCount / totalClases) * 100 : 0; 
+  }
+
+  // Método para guardar la asistencia
+  guardarAsistencia() {
+    const cursoId = 'matematicas123'; // Este sería el ID del curso actual
+    const asistencia = this.estudiantes.map(estudiante => ({
+      id: estudiante.id,
+      nombre: estudiante.nombre,
+      apellido: estudiante.apellido,
+      estado: estudiante.estado // Estado: Presente, Ausente, Justificado
+    }));
+
+    
   }
 }

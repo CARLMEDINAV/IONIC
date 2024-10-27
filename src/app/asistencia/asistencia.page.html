@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Control de Asistencia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-container">
+    <ion-item>
+      <ion-label position="floating">Nombre y Apellido</ion-label>
+      <ion-input [(ngModel)]="nuevo_estudiante.nombre" placeholder="Ingresa tu nombre"></ion-input>
+      <ion-input [(ngModel)]="nuevo_estudiante.apellido" placeholder="Ingresa tu apellido"></ion-input>
+    </ion-item>
+
+    <div class="button-container">
+      <ion-button expand="block" (click)="grabar()" style="margin-top: 25px;" color="warning">Finalizar Registro</ion-button>
+    </div>
+    <ion-item *ngIf="nuevo_estudiante">
+      <ion-label>Asistencias Totales: {{nuevo_estudiante.asistencias || 0}}</ion-label>
+    </ion-item>
+    
+
+    <div class="result-container">
+    </div>
+  </div>
+</ion-content>
