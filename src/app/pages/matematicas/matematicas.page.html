@@ -1,11 +1,43 @@
-<ion-item *ngFor="let estudiante of estudiantes">
-  <ion-label>
-    {{estudiante.nombre}} {{estudiante.apellido}}
-    <div>
-      <strong>Estado:</strong> {{estudiante.estado || 'Sin registrar'}}
-      <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" aria-label="Eliminar estudiante">
-        Eliminar
-      </ion-button>
-    </div>
-  </ion-label>
-</ion-item>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/misclases-p"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles curso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-card *ngFor="let estudiante of estudiantes" class="estudiante-card">
+      <ion-card-content>
+        <ion-item>
+          <ion-label>
+            <h2>{{ estudiante.nombre }} {{ estudiante.apellido }}</h2>
+            <p>
+              <strong>Estado:</strong> {{ estudiante.estado || 'Sin registrar' }}
+            </p>
+          </ion-label>
+          <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" fill="outline" slot="end">
+            Eliminar
+          </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button routerLink="/generar-qr" expand="full">
+          Generar QR
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button routerLink="/reportes" expand="full">
+          Reportes
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

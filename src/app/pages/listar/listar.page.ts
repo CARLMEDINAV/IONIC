@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
-import { CrudfirebaseService } from 'src/app/servicio/crudfirebase.service'; // Asegúrate de importar tu servicio
+import { AsistenciaService } from 'src/app/servicio/asistencia.service'; // Asegúrate de importar tu servicio
 
 interface Estudiante {
   nombre: string;
@@ -20,24 +20,31 @@ export class ListarPage implements OnInit {
   
   estudiantes: Estudiante[] = [];
 
-  constructor(private crudServ: CrudfirebaseService) { } // Inyectar el servicio
+  constructor(private crudServ: AsistenciaService) { } // Inyectar el servicio
 
   ngOnInit() {
     this.cargarEstudiantes();
   }
 
   cargarEstudiantes() {
-    this.crudServ.listarItems().subscribe(data => {
-      this.estudiantes = data.map((estudiante: any) => ({
-        nombre: estudiante.nombre,
-        apellido: estudiante.apellido || '',
-        clasesAsistidas: estudiante.clasesAsistidas || 0,
-        estado: estudiante.estado || '',
-        asistencia: '', // Inicializa con estado vacío o algún valor por defecto
-        porcentajeAsistencia: this.calcularPorcentajeAsistencia(estudiante) // Calcula el porcentaje
-      }));
+    this.crudServ.listarestudiantes().subscribe(data => {
+      this.estudiantes = data
+        .filter((estudiante: any) => estudiante.rol === 'estudiante') // Filtrar por rol
+        .map((estudiante: any) => ({
+          id: estudiante.id, // Asegúrate de obtener el ID
+          nombre: estudiante.nombre,
+          apellido: estudiante.apellido || '',
+          correo: estudiante.correo,
+          estado: estudiante.estado || 'Presente',
+          clasesAsistidas: estudiante.clasesAsistidas || 0, // Agrega clasesAsistidas
+          asistencia: '', // Inicializa con un valor por defecto
+          porcentajeAsistencia: this.calcularPorcentajeAsistencia(estudiante) // Calcula el porcentaje
+        }));
+    }, error => {
+      console.error('Error loading students', error);
     });
   }
+  
 
   // Lógica para calcular el porcentaje de asistencia
   calcularPorcentajeAsistencia(estudiante: any): number {
@@ -50,7 +57,7 @@ export class ListarPage implements OnInit {
     estudiante.asistencia = estado;
     estudiante.clasesAsistidas += 1;
     estudiante.porcentajeAsistencia = this.calcularPorcentajeAsistencia(estudiante);
-    this.crudServ.listarItems(); // Guarda los cambios
+    this.crudServ.listarestudiantes(); // Guarda los cambios
   }
 
   // Lógica para calcular porcentajes específicos de asistencia

@@ -38,7 +38,7 @@
     "cordova": "^12.0.0",
     "crypto": "^1.0.1",
     "express": "^4.19.2",
-    "firebase": "^10.14.0",
+    "firebase": "^10.14.1",
     "ionicons": "^7.0.0",
     "nodemailer": "^6.9.15",
     "qrcode": "^1.5.4",

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/matematicas"></ion-back-button>
     </ion-buttons>
     <ion-title>Generar QR</ion-title>
   </ion-toolbar>
@@ -17,12 +17,8 @@
       <ion-spinner *ngIf="!qrCodeDataUrl" name="crescent"></ion-spinner> <!-- Opcional: Spinner mientras se genera el QR -->
     </div>
 
-    <!-- Contenedor para el rectángulo de progreso -->
-    <div class="progress-container">
-      <div class="progress-bar" [ngStyle]="{ width: progress + '%' }"></div>
-    </div>
 
     <!-- Botón para generar un nuevo código QR -->
-    <ion-button (click)="resetAndStartFilling()" class="start-button">Generar nuevo código QR</ion-button>
+    <ion-button routerLink="/matematicas" class="start-button">Finalizar código QR</ion-button>
   </div>
 </ion-content>

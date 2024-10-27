@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { CrudfirebaseService } from 'src/app/servicio/crudfirebase.service'; // Asegúrate de importar tu servicio
+import { AsistenciaService } from 'src/app/servicio/asistencia.service'; // Asegúrate de importar tu servicio
 import * as XLSX from 'xlsx';
 
 interface Estudiante {
@@ -16,21 +16,29 @@ interface Estudiante {
 export class ReportesPage implements OnInit {
   estudiantes: Estudiante[] = [];
 
-  constructor(private crudServ: CrudfirebaseService) { } // Inyectar el servicio
+  constructor(private crudServ: AsistenciaService) { } // Inyectar el servicio
 
   ngOnInit() {
     this.cargarEstudiantes();
   }
 
   cargarEstudiantes() {
-    this.crudServ.listarItems().subscribe(data => {
-      this.estudiantes = data.map((estudiante: any) => ({
-        nombre: estudiante.nombre,
-        apellido: estudiante.apellido || '',
-        estado: estudiante.estado || 'Presente',
-      
-      }));
-    });
+    this.crudServ.listarestudiantes().subscribe(
+      data => {
+        this.estudiantes = data
+          .filter((estudiante: any) => estudiante.rol === 'estudiante') // Filtrar por rol
+          .map((estudiante: any) => ({
+            id: estudiante.id,
+            nombre: estudiante.nombre,
+            apellido: estudiante.apellido || '',
+            correo: estudiante.correo,
+            estado: estudiante.estado || 'Presente',
+          }));
+      },
+      error => {
+        console.error('Error loading students', error);
+      }
+    );
   }
 
   calcularPorcentajeAsistencia(estudiante: any): number {

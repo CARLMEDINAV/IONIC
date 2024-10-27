@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { CrudfirebaseService, Item } from 'src/app/servicio/crudfirebase.service';
+import { AsistenciaService } from 'src/app/servicio/asistencia.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Estudiante {
@@ -22,7 +22,7 @@ export class MatematicasPage implements OnInit {
   estudiantes: Estudiante[] = [];
 
   constructor(
-    private crudServ: CrudfirebaseService,
+    private crudServ: AsistenciaService,
     private firestore: AngularFirestore // Importa AngularFirestore para guardar asistencia
   ) {}
 
@@ -42,15 +42,17 @@ export class MatematicasPage implements OnInit {
   }
 
   cargarEstudiantes() {
-    this.crudServ.listarItems().subscribe(
+    this.crudServ.listarestudiantes().subscribe(
       data => {
-        this.estudiantes = data.map((estudiante: any) => ({
-          id: estudiante.id, // Asegúrate de obtener el ID
-          nombre: estudiante.nombre,
-          apellido: estudiante.apellido || '',
-          correo: estudiante.correo,
-          estado: estudiante.estado || 'Presente',
-        }));
+        this.estudiantes = data
+          .filter((estudiante: any) => estudiante.rol === 'estudiante') // Filtrar por rol
+          .map((estudiante: any) => ({
+            id: estudiante.id,
+            nombre: estudiante.nombre,
+            apellido: estudiante.apellido || '',
+            correo: estudiante.correo,
+            estado: estudiante.estado || 'Presente',
+          }));
       },
       error => {
         console.error('Error loading students', error);
