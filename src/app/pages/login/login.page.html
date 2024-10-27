@@ -5,19 +5,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Contenedor para centrar el logo -->
   <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
     <img src="../../../assets/img/Icon.png" alt="Logo" style="height: 100px; width: 100px;">
   </div>
   
-  <!-- Contenedor principal con márgenes para separar del toolbar -->
   <div style="margin-top: 30px; padding: 25px; display: flex; align-items: center; justify-content: center; width: 100%;">
     <ion-list style="width: 100%; max-width: 400px;">
       <ion-item>
-        <ion-input [(ngModel)]="usuario" label="Usuario:" placeholder="Ingrese Usuario" type="email"></ion-input>
+        <ion-label position="floating">Usuario:</ion-label>
+        <ion-input [(ngModel)]="usuario" placeholder="Ingrese Usuario" type="email" required></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="contrasena" type="password" label="Contraseña:" placeholder="Ingrese Contraseña"></ion-input>
+        <ion-label position="floating">Contraseña:</ion-label>
+        <ion-input [(ngModel)]="contrasena" type="password" placeholder="Ingrese Contraseña"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Selecciona tu Rol</ion-label>
@@ -33,7 +33,7 @@
       </ion-item>
       <ion-button expand="block" (click)="iniciarSesion()" style="margin-bottom: 15px;" color="warning">Iniciar Sesión</ion-button>
       <ion-button expand="block" (click)="validar2()" style="margin-top: 25px;" color="warning">Registro</ion-button>
-      <ion-button expand="block" (click)="validar3()" style="margin-top: 25px;" color="warning">Leer Terminos Y Condiciones</ion-button>
+      <ion-button expand="block" (click)="validar3()" style="margin-top: 25px;" color="warning">Leer Términos y Condiciones</ion-button>
     </ion-list>
   </div>
 </ion-content>

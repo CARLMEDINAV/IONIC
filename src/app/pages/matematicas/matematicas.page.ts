@@ -7,6 +7,7 @@ interface Estudiante {
   id: string; // Asegúrate de que esto sea el ID único del estudiante
   nombre: string;
   apellido: string;
+  correo: string
   estado: string;
 }
 
@@ -47,6 +48,7 @@ export class MatematicasPage implements OnInit {
           id: estudiante.id, // Asegúrate de obtener el ID
           nombre: estudiante.nombre,
           apellido: estudiante.apellido || '',
+          correo: estudiante.correo,
           estado: estudiante.estado || 'Presente',
         }));
       },
@@ -80,6 +82,7 @@ export class MatematicasPage implements OnInit {
       id: estudiante.id,
       nombre: estudiante.nombre,
       apellido: estudiante.apellido,
+      correo: estudiante.correo,
       estado: estudiante.estado // Estado: Presente, Ausente, Justificado
     }));
 

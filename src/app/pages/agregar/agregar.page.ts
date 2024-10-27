@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
-import { CrudfirebaseService, Item } from 'src/app/servicio/crudfirebase.service';
+import { AlertController, NavController } from '@ionic/angular';
+import { AsistenciaService, Estudiante } from 'src/app/servicio/asistencia.service'; // Asegúrate que esta línea esté correcta
+import { CrudfirebaseService } from 'src/app/servicio/crudfirebase.service';
 
 @Component({
   selector: 'app-agregar',
@@ -9,13 +10,20 @@ import { CrudfirebaseService, Item } from 'src/app/servicio/crudfirebase.service
 })
 export class AgregarPage implements OnInit {
 
-  nuevo_item: Item = { nombre: '', apellido: '',correo:'',clave:'' };
-  listado_item: Item[] = [];
+  nuevo_estudiante: Estudiante = {
+    nombre: '',
+    apellido: '',
+    correo: '',
+    clave: '',
+    rol: 'estudiante', // Inicializa con un rol específico
+    asistencias: 0
+  };
+  listado_estudiante: Estudiante[] = [];
 
   constructor(
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private CrudServ: CrudfirebaseService
+    private Asistencia: AsistenciaService // Asegúrate de que este servicio esté correctamente inyectado
   ) {}
 
   ngOnInit() {
@@ -23,35 +31,73 @@ export class AgregarPage implements OnInit {
   }
 
   grabar() {
-    this.CrudServ.crearItem(this.nuevo_item).then(() => {
-      this.mostrarAlerta(); // Show alert after successful save
-    }).catch((err) => {
-      console.log("Error", err);
-    });
+    // Expresión regular para validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    // Validar el formato del correo
+    if (!emailRegex.test(this.nuevo_estudiante.correo)) {
+      this.mostrarAlerta("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+  
+    // Validar solo si el rol es "profesor"
+    if (this.nuevo_estudiante.rol === 'profesor' && !this.nuevo_estudiante.correo.includes("profesor")) {
+      this.mostrarAlerta("El correo debe contener la palabra 'profesor'.");
+      return;
+    }
+  
+    const estudianteExistente = this.listado_estudiante.find(est => 
+      est.nombre === this.nuevo_estudiante.nombre && est.apellido === this.nuevo_estudiante.apellido
+    );
+  
+    if (estudianteExistente && estudianteExistente.id) {
+      // Incrementa el contador de asistencias del estudiante existente
+      this.Asistencia.modificar(estudianteExistente.id, {
+        ...estudianteExistente,
+        asistencias: estudianteExistente.asistencias + 1
+      }).then(() => {
+        this.mostrarAlerta("Registro actualizado exitosamente.");
+        this.limpiarFormulario(); // Limpia el formulario
+      }).catch(err => console.error("Error incrementando asistencia", err));
+    } else {
+      // Si el estudiante no existe, establece asistencias en 1 y crea el registro
+      this.nuevo_estudiante.asistencias = 1;
+      this.Asistencia.crearestudiante(this.nuevo_estudiante).then(() => {
+        this.mostrarAlerta("Registro creado exitosamente.");
+        this.limpiarFormulario(); // Limpia el formulario
+      }).catch(err => console.error("Error creando estudiante", err));
+    }
   }
+  
+  // Función para limpiar el formulario
+limpiarFormulario() {
+  this.nuevo_estudiante = {
+    nombre: '',
+    apellido: '',
+    correo: '',
+    clave: '',
+    rol: 'estudiante', // o el valor por defecto que desees
+    asistencias: 0
+  };
+}
 
   listar() {
-    this.CrudServ.listarItems().subscribe(data => {
-      this.listado_item = data;
+    this.Asistencia.listarestudiantes().subscribe(data => {
+      this.listado_estudiante = data;
     });
   }
 
-  async mostrarAlerta() {
+  async mostrarAlerta(mensaje: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Registro Exitoso',
-      message: 'Tu registro ha sido completado exitosamente.',
+      header: 'Registro',
+      message: mensaje,
       buttons: [{
         text: 'Aceptar',
         handler: () => {
-          // Redirigir al home después de hacer clic en Aceptar
           this.navCtrl.navigateForward('/login');
         }
       }]
     });
     await alert.present();
-  }
-
-  volver() {
-    this.navCtrl.navigateForward('/login');
   }
 }

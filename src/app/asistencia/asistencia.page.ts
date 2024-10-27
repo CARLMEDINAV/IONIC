@@ -10,7 +10,7 @@ import { CrudfirebaseService } from '../servicio/crudfirebase.service';
 })
 export class AsistenciaPage implements OnInit {
   nuevo_estudiante: Estudiante = {
-    nombre: '', apellido: '',
+    nombre: '', apellido: '',correo: '',clave: '',  rol: 'estudiante', // Inicializa con un rol específico
     asistencias: 0
   };
   listado_estudiante: Estudiante[] = [];
