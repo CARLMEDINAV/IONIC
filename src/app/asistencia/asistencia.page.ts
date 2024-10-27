@@ -26,22 +26,26 @@ export class AsistenciaPage implements OnInit {
   }
 
   grabar() {
-    if (this.nuevo_estudiante.id) {
-      // Si el estudiante ya tiene un ID, incrementa su contador de asistencias
-      this.Asistencia.modificar(this.nuevo_estudiante.id, {
-        ...this.nuevo_estudiante,
-        asistencias: this.nuevo_estudiante.asistencias + 1
+    const estudianteExistente = this.listado_estudiante.find(est => est.nombre === this.nuevo_estudiante.nombre && est.apellido === this.nuevo_estudiante.apellido);
+  
+    if (estudianteExistente && estudianteExistente.id) {  // Aseguramos que id esté definido
+      // Incrementa el contador de asistencias del estudiante existente
+      this.Asistencia.modificar(estudianteExistente.id, {
+        ...estudianteExistente,
+        asistencias: estudianteExistente.asistencias + 1
       }).then(() => {
         this.mostrarAlerta();
       }).catch(err => console.error("Error incrementando asistencia", err));
     } else {
-      // Si es un estudiante nuevo, establece asistencias en 1 y crea el registro
+      // Si el estudiante no existe, establece asistencias en 1 y crea el registro
       this.nuevo_estudiante.asistencias = 1;
       this.Asistencia.crearestudiante(this.nuevo_estudiante).then(() => {
         this.mostrarAlerta();
       }).catch(err => console.error("Error creando estudiante", err));
     }
   }
+  
+  
 
   listar() {
     this.Asistencia.listarestudiantes().subscribe(data => {
