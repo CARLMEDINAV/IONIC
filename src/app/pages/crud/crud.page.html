@@ -1,39 +1,60 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>CRUD Item en FireBase</ion-title>
+    <ion-title>CRUD de Usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Agregar -->
-  <div style="padding: 10px;" *ngIf="sw2">
-    <h2>Agregar Nuevo Reg</h2>
-    <ion-input [(ngModel)]="nuevo_item.nombre" label="Nombre" placeholder="Ingrese nombre"></ion-input>
-    <ion-input [(ngModel)]="nuevo_item.apellido" label="Apellido" placeholder="Ingrese apellido"></ion-input>
-    <ion-button (click)="grabar()">Grabar</ion-button>
-  </div>
-  <!-- Modificar -->
-  <div style="padding: 10px;" *ngIf="sw">
-    <h2>Modificar Reg</h2>
-    <ion-input [(ngModel)]="item_mod.nombre" label="Nombre" placeholder="Ingrese nombre"></ion-input>
-    <ion-input [(ngModel)]="item_mod.apellido" label="Apellido" placeholder="Ingrese apellido"></ion-input>
-    <ion-button (click)="actualizar()">Actualizar</ion-button>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="nuevo_usuario.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input [(ngModel)]="nuevo_usuario.apellido"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input type="email" [(ngModel)]="nuevo_usuario.correo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Clave</ion-label>
+      <ion-input type="password" [(ngModel)]="nuevo_usuario.clave"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="grabar()">Agregar Usuario</ion-button>
+
+  <ion-list>
+    <ion-item *ngFor="let usuario of listado_usuarios">
+      <ion-label>
+        {{ usuario.nombre }} {{ usuario.apellido }}
+      </ion-label>
+      <ion-button (click)="modificar(usuario)">Modificar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer *ngIf="sw">
+    <ion-toolbar>
+      <ion-title>Modificar Usuario</ion-title>
+    </ion-toolbar>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="usuario_mod.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input [(ngModel)]="usuario_mod.apellido"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input type="email" [(ngModel)]="usuario_mod.correo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Clave</ion-label>
+      <ion-input type="password" [(ngModel)]="usuario_mod.clave"></ion-input>
+    </ion-item>
+    <ion-button (click)="actualizar()">Actualizar Usuario</ion-button>
     <ion-button (click)="cancelar()">Cancelar</ion-button>
-
-
-    
-  </div>
-  
-
-  <div style="padding: 10px;">
-    <ion-grid>
-      <ion-row *ngFor="let item of listado_item"> 
-        <ion-col>{{item.nombre}} {{item.apellido}} </ion-col>
-        <ion-col> 
-          <ion-button (click)="eliminar(item.id)">Borrar</ion-button>
-          <ion-button (click)="modificar(item)">Modif.</ion-button>
-        </ion-col>        
-      </ion-row>
-    </ion-grid>
-  </div>
+  </ion-footer>
 </ion-content>

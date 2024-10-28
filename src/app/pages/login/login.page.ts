@@ -1,6 +1,5 @@
-
 import { Component, OnInit } from '@angular/core';
-import { NavController,AlertController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { AsistenciaService } from 'src/app/servicio/asistencia.service'; // Importa tu servicio
 
 @Component({
@@ -8,46 +7,39 @@ import { AsistenciaService } from 'src/app/servicio/asistencia.service'; // Impo
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-
-
-
 export class LoginPage implements OnInit {
+  Usuario: string = '';
+  Contrasena: string = '';
+  Rol: string = '';
 
-  usuario: string = '';
-  contrasena: string = '';
-  rol: string = '';
-
-
-
-  constructor(private navCtrl:NavController,
+  constructor(
+    private navCtrl: NavController,
     private alertCtrl: AlertController,
     private asistenciaService: AsistenciaService // Inyecta el servicio
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async iniciarSesion() {
-    if (!this.usuario || !this.contrasena || !this.rol) {
+    if (!this.Usuario || !this.Contrasena || !this.Rol) {
       await this.presentAlert('Por favor complete todos los campos.');
       return;
     }
-
+  
     try {
-      const userCredential = await this.asistenciaService.validarUsuario(this.usuario, this.contrasena);
-      console.log('Usuario autenticado:', userCredential);
-
-      const userData = await this.asistenciaService.obtenerDatosUsuario(this.usuario);
+      // Verifica la existencia del usuario y obtiene los datos
+      const userData = await this.asistenciaService.validarUsuario(this.Usuario, this.Contrasena);
       console.log('Datos del usuario:', userData);
-
+  
       if (userData) {
-        if (userData.rol === this.rol) {
-          if (this.rol === 'profesor') {
+        if (userData.rol === this.Rol) {
+          // Navega según el rol del usuario
+          if (this.Rol === 'profesor') {
             this.navCtrl.navigateForward('/home');
-          } else if (this.rol === 'estudiante') {
+          } else if (this.Rol === 'estudiante') {
             this.navCtrl.navigateForward('/home-a');
           }
-          localStorage.setItem('usuario', this.usuario);
+          localStorage.setItem('usuario', this.Usuario);
         } else {
           await this.presentAlert('El rol del usuario no coincide con el rol seleccionado.');
         }
@@ -55,12 +47,11 @@ export class LoginPage implements OnInit {
         await this.presentAlert('Usuario no encontrado o rol no reconocido.');
       }
     } catch (error: any) {
-      await this.presentAlert(error.message);
+      // Manejo de errores
+      console.error('Error en el inicio de sesión:', error);
+      await this.presentAlert(error.message); // Muestra el mensaje de error
     }
   }
-  
-  
-  
 
   async presentAlert(mensaje: string) {
     const alert = await this.alertCtrl.create({
@@ -73,17 +64,15 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  validar2(){
-    this.navCtrl.navigateForward(['/agregar'])
+  validarRegistro() {
+    this.navCtrl.navigateForward('/agregar'); // Ruta para registro
   }
 
-  validar3(){
-    this.navCtrl.navigateForward(['/animacion'])
+  validarTerminos() {
+    this.navCtrl.navigateForward('/animacion'); // Ruta para leer términos y condiciones
   }
 
-
-
-    navegarRecuperarContrasena() {
-      this.navCtrl.navigateForward('/recuperar');
-    }
+  navegarRecuperarContrasena() {
+    this.navCtrl.navigateForward('/recuperar'); // Ruta para recuperar contraseña
+  }
 }

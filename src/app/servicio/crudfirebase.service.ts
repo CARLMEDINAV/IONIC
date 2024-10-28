@@ -1,45 +1,49 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';  // Importa map desde rxjs/operators
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudfirebaseService {
 
-  private collectionPath = 'item';
-    // Define collectionPath para los items
+  private collectionPath = 'estudiantes'; // Define collectionPath para los items
 
   constructor(private firestore: AngularFirestore) { }
 
-  // Crear un nuevo item en la colección
-  crearItem(item: Item) {
-    return this.firestore.collection(this.collectionPath).add(item);
+  // Crear un nuevo usuario en la colección
+  crearUsuario(usuario: Usuario) {
+    return this.firestore.collection(this.collectionPath).add(usuario);
   }
 
-  // Listar todos los items de la colección
-  listarItems(): Observable<Item[]> {
-    return this.firestore.collection<Item>(this.collectionPath).valueChanges({ idField: 'id' });
+  // Listar todos los usuarios de la colección
+  listarUsuarios(): Observable<Usuario[]> {
+    return this.firestore.collection<Usuario>(this.collectionPath).valueChanges({ idField: 'id' });
   }
 
-  // Eliminar un item por ID
-  eliminar(id: any) {
+  // Eliminar un usuario por ID
+  eliminar(id: string) { // Cambiado a string
     return this.firestore.collection(this.collectionPath).doc(id).delete();
   }
 
-  // Modificar un item existente por ID
-  modificar(id: any, item: Item) {
-    return this.firestore.collection(this.collectionPath).doc(id).update(item);
+  // Modificar un usuario existente por ID
+  modificar(id: string, usuario: Usuario) { // Cambiado a Usuario
+    return this.firestore.collection(this.collectionPath).doc(id).update(usuario);
   }
 
-  // Verificar si un estudiante existe por su ID
+  // Verificar si un usuario existe por su ID
+  verificarUsuario(id: string): Promise<boolean> {
+    return this.firestore.collection(this.collectionPath).doc(id).get().toPromise().then(doc => {
+      return doc ? doc.exists : false; // Verifica si doc existe antes de acceder a exists
+    });
+  }
 }
-// Interfaz para definir los atributos de un estudiante o item
-export interface Item {
+
+// Interfaz para definir los atributos de un usuario
+export interface Usuario {
   id?: string;        // ID opcional
-  nombre: string;     // Nombre del estudiante o item
-  apellido: string;   // Apellido del estudiante
-  correo: string;     // Correo electrónico del estudiante
+  nombre: string;     // Nombre del usuario
+  apellido: string;   // Apellido del usuario
+  correo: string;     // Correo electrónico del usuario
   clave: string;      // Clave de acceso o contraseña
 }

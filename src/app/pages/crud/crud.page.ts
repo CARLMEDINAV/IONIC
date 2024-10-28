@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-//librerias
-import { CrudfirebaseService,Item } from 'src/app/servicio/crudfirebase.service';
+// Librerías
+import { CrudfirebaseService, Usuario } from 'src/app/servicio/crudfirebase.service';
 
 @Component({
   selector: 'app-crud',
@@ -9,60 +9,72 @@ import { CrudfirebaseService,Item } from 'src/app/servicio/crudfirebase.service'
 })
 export class CrudPage implements OnInit {
 
-  constructor(private CrudServ: CrudfirebaseService) { }
+  constructor(private crudServ: CrudfirebaseService) { }
 
-  nuevo_item: Item = {nombre:'',apellido:'',clave:'',correo:''}
-  listado_item: Item[]=[]
-  item_mod: Item = {id:'',nombre:'',apellido:'',clave:'',correo:''}
+  nuevo_usuario: Usuario = { nombre: '', apellido: '', clave: '', correo: '' }; // Cambiado a Usuario
+  listado_usuarios: Usuario[] = []; // Cambiado a Usuario
+  usuario_mod: Usuario = { id: '', nombre: '', apellido: '', clave: '', correo: '' }; // Cambiado a Usuario
 
-  sw:boolean=false  //flag(banderitas)
-  sw2:boolean=true  //flag(banderitas)
-
-
+  sw: boolean = false;  // Flag (banderitas)
+  sw2: boolean = true;  // Flag (banderitas)
 
   ngOnInit() {
-    this.listar()
+    this.listar();
   }
 
-  grabar(){
-    this.CrudServ.crearItem(this.nuevo_item).then(()=>{
-      alert("Lo grabe")
-    }).catch((err)=>{
-      console.log("Error")
-    })
-  }
-  listar(){
-    this.CrudServ.listarItems().subscribe(data=>{
-      this.listado_item=data
-    })
+  grabar() {
+    this.crudServ.crearUsuario(this.nuevo_usuario).then(() => {
+      alert("Usuario guardado exitosamente.");
+      this.listar(); // Actualiza la lista después de agregar un nuevo usuario
+      this.nuevo_usuario = { nombre: '', apellido: '', clave: '', correo: '' }; // Reinicia el formulario
+    }).catch((err) => {
+      console.log("Error al guardar el usuario:", err);
+    });
   }
 
-  eliminar(id:any){
-    this.CrudServ.eliminar(id).then(()=>{
-      alert("elimino")
-    }).catch((err)=>{
-      console.log(err)
-    })
+  listar() {
+    this.crudServ.listarUsuarios().subscribe(data => {
+      this.listado_usuarios = data; // Cambiado a listado_usuarios
+    });
   }
 
-  modificar(item: Item){
-    this.item_mod=item
-    this.sw=true
-    this.sw2=false
+  eliminar(id: string) { // Cambiado a string
+    if (id) { // Verifica que el id no sea undefined
+      this.crudServ.eliminar(id).then(() => {
+        alert("Usuario eliminado exitosamente.");
+        this.listar(); // Actualiza la lista después de eliminar
+      }).catch((err) => {
+        console.log("Error al eliminar el usuario:", err);
+      });
+    } else {
+      alert("ID de usuario no encontrado.");
+    }
   }
 
-  cancelar(){
-    this.sw=false
-    this.sw2=true
+  modificar(usuario: Usuario) { // Cambiado a Usuario
+    this.usuario_mod = usuario; // Cambiado a usuario_mod
+    this.sw = true;
+    this.sw2 = false;
   }
 
-  actualizar(){
-    this.CrudServ.modificar(this.item_mod.id, this.item_mod)
-    .then(()=>{
-      alert("modifico");
-      this.cancelar();
-    }).catch((err)=>{
-      console.log(err)
-    })
+  cancelar() {
+    this.sw = false;
+    this.sw2 = true;
+    this.usuario_mod = { id: '', nombre: '', apellido: '', clave: '', correo: '' }; // Reinicia el formulario de modificación
+  }
+
+  actualizar() {
+    if (this.usuario_mod.id) {
+      this.crudServ.modificar(this.usuario_mod.id, this.usuario_mod)
+        .then(() => {
+          alert("Usuario modificado exitosamente.");
+          this.cancelar(); // Resetea las banderas
+          this.listar(); // Actualiza la lista después de modificar
+        }).catch((err) => {
+          console.log("Error al modificar el usuario:", err);
+        });
+    } else {
+      alert("ID de usuario no encontrado.");
+    }
   }
 }

@@ -1,39 +1,31 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>RegistAPP</ion-title>
+    <ion-title>Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
-    <img src="../../../assets/img/Icon.png" alt="Logo" style="height: 100px; width: 100px;">
-  </div>
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Correo</ion-label>
+    <ion-input type="email" [(ngModel)]="Usuario"></ion-input>
+  </ion-item>
   
-  <div style="margin-top: 30px; padding: 25px; display: flex; align-items: center; justify-content: center; width: 100%;">
-    <ion-list style="width: 100%; max-width: 400px;">
-      <ion-item>
-        <ion-label position="floating">Usuario:</ion-label>
-        <ion-input [(ngModel)]="usuario" placeholder="Ingrese Usuario" type="email" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Contraseña:</ion-label>
-        <ion-input [(ngModel)]="contrasena" type="password" placeholder="Ingrese Contraseña"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Selecciona tu Rol</ion-label>
-        <ion-select [(ngModel)]="rol" placeholder="Selecciona uno">
-          <ion-select-option value="profesor">Profesor</ion-select-option>
-          <ion-select-option value="alumno">Alumno</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" style="text-align: left; margin-top: 10px; cursor: pointer;" (click)="navegarRecuperarContrasena()">
-          Olvidar contraseña
-        </ion-label>
-      </ion-item>
-      <ion-button expand="block" (click)="iniciarSesion()" style="margin-bottom: 15px;" color="warning">Iniciar Sesión</ion-button>
-      <ion-button expand="block" (click)="validar2()" style="margin-top: 25px;" color="warning">Registro</ion-button>
-      <ion-button expand="block" (click)="validar3()" style="margin-top: 25px;" color="warning">Leer Términos y Condiciones</ion-button>
-    </ion-list>
-  </div>
+  <ion-item>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input type="password" [(ngModel)]="Contrasena"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Rol</ion-label>
+    <ion-select [(ngModel)]="Rol">
+      <ion-select-option value="estudiante">Estudiante</ion-select-option>
+      <ion-select-option value="profesor">Profesor</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="full" (click)="iniciarSesion()">Iniciar Sesión</ion-button>
+  
+  <ion-button expand="full" (click)="validarRegistro()">Registrar</ion-button>
+  <ion-button expand="full" (click)="validarTerminos()">Términos y Condiciones</ion-button>
+  <ion-button expand="full" (click)="navegarRecuperarContrasena()">Recuperar Contraseña</ion-button>
 </ion-content>

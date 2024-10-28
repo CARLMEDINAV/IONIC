@@ -1,14 +1,16 @@
+// Importaciones necesarias
 import { Component, OnInit } from '@angular/core';
 import * as QRCode from 'qrcode';
 import { AsistenciaService } from 'src/app/servicio/asistencia.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Estudiante {
-  id: string; // Asegúrate de que esto sea el ID único del estudiante
+  id: string; 
   nombre: string;
   apellido: string;
-  correo: string
+  correo: string;
   estado: string;
+  asistencias: number;
 }
 
 @Component({
@@ -18,12 +20,11 @@ interface Estudiante {
 })
 export class MatematicasPage implements OnInit {
   qrCodeDataUrl: string | undefined;
-  progress = 0;
   estudiantes: Estudiante[] = [];
 
   constructor(
     private crudServ: AsistenciaService,
-    private firestore: AngularFirestore // Importa AngularFirestore para guardar asistencia
+    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class MatematicasPage implements OnInit {
     this.cargarEstudiantes();
   }
 
+  // Genera un código QR con la URL especificada
   generateQRCode(data: string) {
     QRCode.toDataURL(data)
       .then((url: string) => {
@@ -41,17 +43,19 @@ export class MatematicasPage implements OnInit {
       });
   }
 
+  // Cargar lista de estudiantes desde el servicio
   cargarEstudiantes() {
     this.crudServ.listarestudiantes().subscribe(
       data => {
         this.estudiantes = data
-          .filter((estudiante: any) => estudiante.rol === 'estudiante') // Filtrar por rol
+          .filter((estudiante: any) => estudiante.rol === 'estudiante') 
           .map((estudiante: any) => ({
             id: estudiante.id,
             nombre: estudiante.nombre,
             apellido: estudiante.apellido || '',
             correo: estudiante.correo,
             estado: estudiante.estado || 'Presente',
+            asistencias: estudiante.asistencias
           }));
       },
       error => {
@@ -60,6 +64,7 @@ export class MatematicasPage implements OnInit {
     );
   }
 
+  // Eliminar un estudiante de la lista y la base de datos
   eliminarEstudiante(id: string) {
     this.crudServ.eliminar(id).then(
       () => {
@@ -72,22 +77,37 @@ export class MatematicasPage implements OnInit {
     );
   }
 
-  calcularPorcentajeAsistencia(estudiante: any): number {
-    const totalClases = estudiante.clasesAsistidas || 0; 
-    return totalClases > 0 ? (estudiante.asistenciaCount / totalClases) * 100 : 0; 
+  // Calcular el porcentaje de asistencia
+  calcularPorcentajeAsistencia(estudiante: Estudiante): number {
+    const totalClases = estudiante.asistencias || 0;
+    return totalClases > 0 ? (estudiante.asistencias / totalClases) * 100 : 0;
   }
 
-  // Método para guardar la asistencia
+  // Guardar la asistencia de estudiantes en Firestore
   guardarAsistencia() {
-    const cursoId = 'matematicas123'; // Este sería el ID del curso actual
+    const cursoId = 'matematicas123'; 
     const asistencia = this.estudiantes.map(estudiante => ({
       id: estudiante.id,
       nombre: estudiante.nombre,
       apellido: estudiante.apellido,
       correo: estudiante.correo,
-      estado: estudiante.estado // Estado: Presente, Ausente, Justificado
+      estado: estudiante.estado,
+      fecha: new Date().toISOString(), 
     }));
 
-    
+    this.firestore
+      .collection('asistencias')
+      .doc(cursoId)
+      .collection('registros')
+      .add({
+        fecha: new Date().toISOString(),
+        estudiantes: asistencia
+      })
+      .then(() => {
+        console.log('Asistencia guardada exitosamente');
+      })
+      .catch(error => {
+        console.error('Error al guardar la asistencia', error);
+      });
   }
 }

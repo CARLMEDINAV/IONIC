@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/misclases-p"></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalles curso</ion-title>
+    <ion-title>Detalles del Curso</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,10 @@
           <ion-label>
             <h2>{{ estudiante.nombre }} {{ estudiante.apellido }}</h2>
             <p>
-              <strong>Estado:</strong> {{ estudiante.estado || 'Sin registrar' }}
+              <strong>Estado:</strong> {{ estudiante.estado || 'Sin registrar' }}<br>
+              <strong>Total De Asistencias:</strong> 
+              {{estudiante.asistencias}}
+              
             </p>
           </ion-label>
           <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" fill="outline" slot="end">
@@ -25,19 +28,19 @@
       </ion-card-content>
     </ion-card>
   </ion-list>
-
-  <ion-footer>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button routerLink="/generar-qr" expand="full">
-          Generar QR
-        </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button routerLink="/reportes" expand="full">
-          Reportes
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/generar-qr" expand="full">
+        Generar QR
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/reportes" expand="full">
+        Reportes
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
