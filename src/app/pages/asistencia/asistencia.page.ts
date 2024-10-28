@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { AsistenciaService, Estudiante } from 'src/app/servicio/asistencia.service'; // Asegúrate que esta línea esté correcta
-import { CrudfirebaseService } from '../servicio/crudfirebase.service';
+import { CrudfirebaseService } from '../../servicio/crudfirebase.service';
 
 @Component({
   selector: 'app-asistencia',

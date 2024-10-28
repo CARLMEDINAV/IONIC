@@ -15,7 +15,7 @@ export class GenerarQrPage implements OnInit {
   
 
   ngOnInit() {
-    this.generateQRCode('https://ionics.vercel.app/agregar'); // Genera un QR inicial
+    this.generateQRCode('https://ionics.vercel.app/asistencia'); // Genera un QR inicial
   }
 
   // Función para generar un nuevo código QR
@@ -33,7 +33,7 @@ export class GenerarQrPage implements OnInit {
   resetAndStartFilling() {
     this.progress = 0; // Reinicia el progreso a 0
     this.startFilling(); // Comienza el llenado
-    this.generateQRCode('https://ionics.vercel.app/agregar'); // Genera un nuevo código QR
+    this.generateQRCode('https://ionics.vercel.app/asistencia'); // Genera un nuevo código QR
   }
 
   // Función para iniciar el llenado del rectángulo
