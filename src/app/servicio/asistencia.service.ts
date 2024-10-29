@@ -165,4 +165,27 @@ export class AsistenciaService {
 
     return null; // No existe un usuario con este correo
   }
+
+  // Método para obtener el porcentaje de asistencia
+  async obtenerAsistencia(usuario: string): Promise<number> {
+    const estudianteDoc = await this.firestore.collection(this.collectionPath).doc(usuario).ref.get();
+    
+    if (!estudianteDoc.exists) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    const estudiante = estudianteDoc.data() as Estudiante;
+    const totalClases = await this.obtenerTotalClases(); // Implementa este método según tus necesidades
+    const clasesAsistidas = estudiante.asistencias || 0;
+
+    if (totalClases === 0) return 0; // Para evitar división por cero
+
+    return (clasesAsistidas / totalClases) * 100; // Devuelve el porcentaje de asistencia
+  }
+
+  // Método para obtener el total de clases (debes implementar esta lógica)
+  async obtenerTotalClases(): Promise<number> {
+    // Implementa la lógica para obtener el total de clases (puede ser un número fijo o consultado desde otra colección)
+    return 10; // Ejemplo de total de clases
+  }
 }

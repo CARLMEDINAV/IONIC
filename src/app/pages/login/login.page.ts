@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
             this.navCtrl.navigateForward('/home');
           } else if (this.Rol === 'estudiante') {
             this.navCtrl.navigateForward('/home-a');
+            await this.verPorcentajeAsistencia(); // Llama al método para ver porcentaje de asistencia
           }
           localStorage.setItem('usuario', this.Usuario);
         } else {
@@ -50,6 +51,16 @@ export class LoginPage implements OnInit {
       // Manejo de errores
       console.error('Error en el inicio de sesión:', error);
       await this.presentAlert(error.message); // Muestra el mensaje de error
+    }
+  }
+
+  async verPorcentajeAsistencia() {
+    try {
+      const porcentaje = await this.asistenciaService.obtenerAsistencia(this.Usuario);
+      await this.presentAlert(`Tu porcentaje de asistencia es: ${porcentaje.toFixed(2)}%`);
+    } catch (error: any) {
+      console.error('Error al obtener el porcentaje de asistencia:', error);
+      await this.presentAlert('No se pudo obtener el porcentaje de asistencia.');
     }
   }
 

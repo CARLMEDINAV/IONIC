@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AsistenciaService,Estudiante } from 'src/app/servicio/asistencia.service';
 
 @Component({
   selector: 'app-mis-asignaturas',
@@ -12,4 +13,6 @@ export class MisAsignaturasPage implements OnInit {
   ngOnInit() {
   }
 
+
+  
 }

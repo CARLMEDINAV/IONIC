@@ -1,4 +1,3 @@
-// Importaciones necesarias
 import { Component, OnInit } from '@angular/core';
 import * as QRCode from 'qrcode';
 import { AsistenciaService } from 'src/app/servicio/asistencia.service';
@@ -21,6 +20,7 @@ interface Estudiante {
 export class MatematicasPage implements OnInit {
   qrCodeDataUrl: string | undefined;
   estudiantes: Estudiante[] = [];
+  totalClases = 10; // Define el total de clases para calcular el porcentaje de asistencia
 
   constructor(
     private crudServ: AsistenciaService,
@@ -28,11 +28,10 @@ export class MatematicasPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.generateQRCode('https://ionics.vercel.app/agregar');
+    this.generateQRCode('https://ionics.vercel.app/agregar'); // URL para el QR
     this.cargarEstudiantes();
   }
 
-  // Genera un código QR con la URL especificada
   generateQRCode(data: string) {
     QRCode.toDataURL(data)
       .then((url: string) => {
@@ -43,7 +42,6 @@ export class MatematicasPage implements OnInit {
       });
   }
 
-  // Cargar lista de estudiantes desde el servicio
   cargarEstudiantes() {
     this.crudServ.listarestudiantes().subscribe(
       data => {
@@ -55,7 +53,7 @@ export class MatematicasPage implements OnInit {
             apellido: estudiante.apellido || '',
             correo: estudiante.correo,
             estado: estudiante.estado || 'Presente',
-            asistencias: estudiante.asistencias
+            asistencias: estudiante.asistencias || 0,
           }));
       },
       error => {
@@ -64,7 +62,6 @@ export class MatematicasPage implements OnInit {
     );
   }
 
-  // Eliminar un estudiante de la lista y la base de datos
   eliminarEstudiante(id: string) {
     this.crudServ.eliminar(id).then(
       () => {
@@ -77,13 +74,10 @@ export class MatematicasPage implements OnInit {
     );
   }
 
-  // Calcular el porcentaje de asistencia
   calcularPorcentajeAsistencia(estudiante: Estudiante): number {
-    const totalClases = estudiante.asistencias || 0;
-    return totalClases > 0 ? (estudiante.asistencias / totalClases) * 100 : 0;
+    return ((estudiante.asistencias / this.totalClases) * 100) || 0;
   }
 
-  // Guardar la asistencia de estudiantes en Firestore
   guardarAsistencia() {
     const cursoId = 'matematicas123'; 
     const asistencia = this.estudiantes.map(estudiante => ({
@@ -109,5 +103,44 @@ export class MatematicasPage implements OnInit {
       .catch(error => {
         console.error('Error al guardar la asistencia', error);
       });
+  }
+
+  crearNuevaClase() {
+    const cursoId = 'matematicas123'; // ID del curso para identificarlo en Firestore
+
+    // Lista de estudiantes presentes
+    const asistentes = this.estudiantes
+      .filter(estudiante => estudiante.estado === 'Presente')
+      .map(estudiante => ({
+        id: estudiante.id,
+        nombre: estudiante.nombre,
+        apellido: estudiante.apellido,
+        correo: estudiante.correo,
+        asistencias: estudiante.asistencias,
+      }));
+
+    const nuevaClase = {
+      fecha: new Date().toISOString(), // Fecha actual como identificador de la clase
+      descripcion: 'Clase de Matemáticas', // Descripción de la clase, ajustable
+      asistentes: asistentes // Agregar los estudiantes presentes a la nueva clase
+    };
+
+    this.firestore
+      .collection('clases')
+      .doc(cursoId)
+      .collection('registros')
+      .add(nuevaClase)
+      .then(() => {
+        console.log('Nueva clase creada exitosamente');
+        this.totalClases++; // Incrementa el total de clases al crear una nueva clase
+        this.cargarEstudiantes(); // Recarga la lista de estudiantes después de crear la clase
+      })
+      .catch(error => {
+        console.error('Error al crear una nueva clase', error);
+      });
+  }
+
+  contarAsistentes(): number {
+    return this.estudiantes.filter(estudiante => estudiante.estado === 'Presente').length;
   }
 }

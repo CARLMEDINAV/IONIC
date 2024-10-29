@@ -4,6 +4,16 @@
       <ion-back-button defaultHref="/misclases-p"></ion-back-button>
     </ion-buttons>
     <ion-title>Detalles del Curso</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="crearNuevaClase()" color="primary">
+        Nueva Clase
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>
+      Alumnos Asistentes: {{ contarAsistentes() }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,9 +26,7 @@
             <h2>{{ estudiante.nombre }} {{ estudiante.apellido }}</h2>
             <p>
               <strong>Estado:</strong> {{ estudiante.estado || 'Sin registrar' }}<br>
-              <strong>Total De Asistencias:</strong> 
-              {{estudiante.asistencias}}
-              
+              <strong>Total De Asistencias:</strong> {{ estudiante.asistencias }}
             </p>
           </ion-label>
           <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" fill="outline" slot="end">
