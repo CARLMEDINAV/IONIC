@@ -30,7 +30,7 @@ export class AgregarPage implements OnInit {
     this.listar();
   }
 
-  grabar() {
+  async grabar() {
     // Expresión regular para validar el formato del correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
@@ -51,23 +51,24 @@ export class AgregarPage implements OnInit {
     );
   
     if (estudianteExistente && estudianteExistente.id) {
-      // Incrementa el contador de asistencias del estudiante existente
-      this.Asistencia.modificar(estudianteExistente.id, {
+      // Si el estudiante ya existe, puedes decidir si deseas actualizar asistencias a 0 o mantener el conteo actual
+      await this.Asistencia.modificar(estudianteExistente.id, {
         ...estudianteExistente,
-        asistencias: estudianteExistente.asistencias + 1
+        asistencias: 0 // Inicializa asistencias en 0
       }).then(() => {
         this.mostrarAlerta("Registro actualizado exitosamente.");
         this.limpiarFormulario(); // Limpia el formulario
-      }).catch(err => console.error("Error incrementando asistencia", err));
+      }).catch(err => console.error("Error actualizando asistencia", err));
     } else {
-      // Si el estudiante no existe, establece asistencias en 1 y crea el registro
-      this.nuevo_estudiante.asistencias = 1;
+      // Si el estudiante no existe, crea un nuevo registro con asistencias en 0
+      this.nuevo_estudiante.asistencias = 0; // Inicializa asistencias en 0
       this.Asistencia.crearestudiante(this.nuevo_estudiante).then(() => {
         this.mostrarAlerta("Registro creado exitosamente.");
         this.limpiarFormulario(); // Limpia el formulario
       }).catch(err => console.error("Error creando estudiante", err));
     }
   }
+  
   
   // Función para limpiar el formulario
 limpiarFormulario() {

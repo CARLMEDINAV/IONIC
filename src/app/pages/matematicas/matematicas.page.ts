@@ -54,7 +54,8 @@ export class MatematicasPage implements OnInit {
             correo: estudiante.correo,
             estado: estudiante.estado || 'Presente',
             asistencias: estudiante.asistencias || 0,
-          }));
+          }))
+          .filter(estudiante => estudiante.asistencias > 0); // Filtrar estudiantes con más de 0 asistencias
       },
       error => {
         console.error('Error loading students', error);
