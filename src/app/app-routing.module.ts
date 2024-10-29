@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -65,14 +66,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/animacion/animacion.module').then( m => m.AnimacionPageModule)
   },
   {
-    path: 'crud',
-    loadChildren: () => import('./pages/crud/crud.module').then( m => m.CrudPageModule)
-  },
-  {
-    path: 'crud-api',
-    loadChildren: () => import('./pages/crud-api/crud-api.module').then( m => m.CrudApiPageModule)
-  },
-  {
     path: 'mis-asignaturas',
     loadChildren: () => import('./pages/mis-asignaturas/mis-asignaturas.module').then( m => m.MisAsignaturasPageModule)
   },
@@ -121,7 +114,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    [HttpClientModule],
   ],
   exports: [RouterModule]
 })

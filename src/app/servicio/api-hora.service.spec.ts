@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CrudApiDjangoService } from './crud-api-django.service';
+import { ApiHoraService } from './api-hora.service';
 
-describe('CrudApiDjangoService', () => {
-  let service: CrudApiDjangoService;
+describe('ApiHoraService', () => {
+  let service: ApiHoraService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CrudApiDjangoService);
+    service = TestBed.inject(ApiHoraService);
   });
 
   it('should be created', () => {
