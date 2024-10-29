@@ -25,38 +25,40 @@ export class AsistenciaPage implements OnInit {
     this.listar();
   }
 
-  grabar() {
-    const estudianteExistente = this.listado_estudiante.find(est => est.nombre === this.nuevo_estudiante.nombre && est.apellido === this.nuevo_estudiante.apellido);
+  async grabar() {
+    const estudianteExistente = this.listado_estudiante.find(est => 
+      est.nombre === this.nuevo_estudiante.nombre && 
+      est.apellido === this.nuevo_estudiante.apellido
+    );
   
-    if (estudianteExistente && estudianteExistente.id) {  // Aseguramos que id esté definido
-      // Incrementa el contador de asistencias del estudiante existente
-      this.Asistencia.modificar(estudianteExistente.id, {
-        ...estudianteExistente,
-        asistencias: estudianteExistente.asistencias + 1
-      }).then(() => {
-        this.mostrarAlerta();
-      }).catch(err => console.error("Error incrementando asistencia", err));
+    if (estudianteExistente) {
+      // Si se encuentra el estudiante, se puede permitir el ingreso
+      this.nuevo_estudiante.correo = estudianteExistente.correo; // Asigna el correo encontrado
+  
+      // Verifica que id esté definido
+      if (estudianteExistente.id) {
+        // Incrementa el contador de asistencias del estudiante existente
+        this.Asistencia.modificar(estudianteExistente.id, {
+          ...estudianteExistente,
+          asistencias: estudianteExistente.asistencias + 1
+        }).then(() => {
+          this.mostrarAlerta('Registro de asistencia exitoso.');
+        }).catch(err => console.error("Error incrementando asistencia", err));
+      } else {
+        await this.presentAlert('ID del estudiante no disponible.');
+      }
     } else {
-      // Si el estudiante no existe, establece asistencias en 1 y crea el registro
-      this.nuevo_estudiante.asistencias = 1;
-      this.Asistencia.crearestudiante(this.nuevo_estudiante).then(() => {
-        this.mostrarAlerta();
-      }).catch(err => console.error("Error creando estudiante", err));
+      // Si no se encuentra el estudiante
+      await this.presentAlert('Ningún correo asociado a los datos ingresados.');
     }
   }
   
+    
   
-
-  listar() {
-    this.Asistencia.listarestudiantes().subscribe(data => {
-      this.listado_estudiante = data;
-    });
-  }
-
-  async mostrarAlerta() {
+  async mostrarAlerta(message: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Registro Exitoso',
-      message: 'Tu registro ha sido completado exitosamente.',
+      header: 'Información',
+      message: message,
       buttons: [{
         text: 'Aceptar',
         handler: () => {
@@ -66,6 +68,25 @@ export class AsistenciaPage implements OnInit {
     });
     await alert.present();
   }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Atención',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  
+
+  listar() {
+    this.Asistencia.listarestudiantes().subscribe(data => {
+      this.listado_estudiante = data;
+    });
+  }
+
+
 
   volver() {
     this.navCtrl.navigateForward('/login');
