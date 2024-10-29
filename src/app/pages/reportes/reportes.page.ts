@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AsistenciaService } from 'src/app/servicio/asistencia.service';
 import * as XLSX from 'xlsx';
+import { AngularFirestore, DocumentData } from '@angular/fire/compat/firestore';
 
 interface Estudiante {
   id: string;
@@ -8,8 +9,14 @@ interface Estudiante {
   apellido: string;
   correo: string;
   estado: string;
+  asistencias: number;
   clasesAsistidas: number;
-  asistenciaCount: number;
+}
+
+interface Clase {
+  fecha: string;
+  descripcion: string;
+  asistentes: Estudiante[];
 }
 
 @Component({
@@ -19,11 +26,17 @@ interface Estudiante {
 })
 export class ReportesPage implements OnInit {
   estudiantes: Estudiante[] = [];
+  clases: Clase[] = [];
+  totalClases = 10;
 
-  constructor(private crudServ: AsistenciaService) {}
+  constructor(
+    private crudServ: AsistenciaService,
+    private firestore: AngularFirestore
+  ) {}
 
   ngOnInit() {
     this.cargarEstudiantes();
+    this.listarClases();
   }
 
   cargarEstudiantes() {
@@ -37,8 +50,8 @@ export class ReportesPage implements OnInit {
             apellido: estudiante.apellido || '',
             correo: estudiante.correo,
             estado: estudiante.estado || 'Presente',
-            clasesAsistidas: estudiante.clasesAsistidas || 10,
-            asistenciaCount: estudiante.asistenciaCount || 0,
+            asistencias: estudiante.asistencias || 0,
+            clasesAsistidas: estudiante.clasesAsistidas || this.totalClases,
           }));
       },
       error => {
@@ -49,7 +62,7 @@ export class ReportesPage implements OnInit {
 
   calcularPorcentajeAsistencia(estudiante: Estudiante): number {
     return estudiante.clasesAsistidas > 0
-      ? (estudiante.asistenciaCount / estudiante.clasesAsistidas) * 100
+      ? (estudiante.asistencias / estudiante.clasesAsistidas) * 100
       : 0;
   }
 
@@ -58,5 +71,21 @@ export class ReportesPage implements OnInit {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Asistencia');
     XLSX.writeFile(wb, 'asistencia.xlsx');
+  }
+
+  listarClases() {
+    const cursoId = 'matematicas123'; // ID del curso para identificarlo en Firestore
+
+    this.firestore.collection('clases').doc(cursoId).collection('registros')
+      .valueChanges()
+      .subscribe((data: DocumentData[]) => {
+        this.clases = data.map(item => ({
+          fecha: item['fecha'],
+          descripcion: item['descripcion'],
+          asistentes: item['asistentes'] || []
+        })) as Clase[];
+      }, error => {
+        console.error('Error al cargar las clases', error);
+      });
   }
 }
