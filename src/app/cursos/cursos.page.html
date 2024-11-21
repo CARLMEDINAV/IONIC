@@ -1,0 +1,25 @@
+<!-- cursos.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cursos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let categoria of categorias">
+      <ion-label>
+        <h2>{{ categoria.nombre }}</h2>
+        <ion-list>
+          <ion-item *ngFor="let curso of categoria.cursos">
+            <ion-label>{{ curso }}</ion-label>
+            <ion-item *ngFor="let curso of categoria.cursos" [routerLink]="['/curso', curso]">
+              <ion-label>{{ curso }}</ion-label>
+            </ion-item>
+            
+          </ion-item>
+        </ion-list>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
