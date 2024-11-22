@@ -14,3 +14,15 @@
   font-size: 0.9em; /* Tamaño de fuente más pequeño para el estado */
   color: #666; /* Color de texto más suave */
 }
+
+.qr-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.qr-img {
+  max-width: 150px; /* Ajusta el tamaño máximo del código QR */
+  max-height: 150px; /* Ajusta el tamaño máximo del código QR */
+  margin: 0 auto;
+}
+

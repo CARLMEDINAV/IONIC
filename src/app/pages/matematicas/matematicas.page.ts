@@ -4,30 +4,20 @@ import { AsistenciaService } from 'src/app/servicio/asistencia.service';
 import { AngularFirestore, DocumentData } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
 
-interface Estudiante {
-  id: string;
-  nombre: string;
-  apellido: string;
-  correo: string;
-  estado: string;
-  asistencias: number;
-}
-
-interface Clase {
-  fecha: string;
-  descripcion: string;
-  asistentes: Estudiante[];
-}
-
 @Component({
   selector: 'app-matematicas',
   templateUrl: './matematicas.page.html',
   styleUrls: ['./matematicas.page.scss'],
 })
 export class MatematicasPage implements OnInit {
-  qrCodeDataUrl: string | undefined;
-  estudiantes: Estudiante[] = [];
-  clases: Clase[] = [];
+  qrCodeDataUrlMatematicas: string | undefined;
+  qrCodeDataUrlFisica: string | undefined;
+  qrCodeDataUrlQuimica: string | undefined;
+  estudiantes: any[] = [];
+  estudiantesMatematicas: any[] = [];
+  estudiantesFisica: any[] = [];
+  estudiantesQuimica: any[] = [];
+  clases: any[] = [];
   totalClases = 10;
 
   constructor(
@@ -37,7 +27,9 @@ export class MatematicasPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.generateQRCode('https://ionics.vercel.app/agregar');
+    this.generarQR('matematicas123', 'https://ionics.vercel.app/asistencia/');
+    this.generarQR('fisica123', 'https://ionics.vercel.app/asistencia/');
+    this.generarQR('quimica123', 'https://ionics.vercel.app/asistencia/');
     this.cargarEstudiantes();
     this.listarClases();
   }
@@ -51,13 +43,19 @@ export class MatematicasPage implements OnInit {
     await alert.present();
   }
 
-  generateQRCode(data: string) {
-    QRCode.toDataURL(data)
+  generarQR(cursoId: string, url: string) {
+    QRCode.toDataURL(url)
       .then((url: string) => {
-        this.qrCodeDataUrl = url;
+        if (cursoId === 'matematicas123') {
+          this.qrCodeDataUrlMatematicas = url;
+        } else if (cursoId === 'fisica123') {
+          this.qrCodeDataUrlFisica = url;
+        } else if (cursoId === 'quimica123') {
+          this.qrCodeDataUrlQuimica = url;
+        }
       })
       .catch((err: Error) => {
-        console.error('Error generating QR code', err);
+        console.error('Error generando el QR', err);
       });
   }
 
@@ -65,7 +63,7 @@ export class MatematicasPage implements OnInit {
     this.crudServ.listarestudiantes().subscribe(
       data => {
         this.estudiantes = data
-          .filter((estudiante: any) => estudiante.rol === 'estudiante') 
+          .filter((estudiante: any) => estudiante.rol === 'estudiante')
           .map((estudiante: any) => ({
             id: estudiante.id,
             nombre: estudiante.nombre,
@@ -76,29 +74,27 @@ export class MatematicasPage implements OnInit {
           }));
       },
       error => {
-        console.error('Error loading students', error);
+        console.error('Error al cargar los estudiantes', error);
       }
     );
   }
 
-  eliminarEstudiante(id: string) {
-    this.crudServ.eliminar(id).then(
-      () => {
-        this.estudiantes = this.estudiantes.filter(estudiante => estudiante.id !== id);
-        console.log('Estudiante eliminado con éxito');
-      },
-      error => {
-        console.error('Error al eliminar el estudiante', error);
-      }
-    );
+  // Método para listar los estudiantes de Matemáticas
+  listarEstudiantesMatematicas() {
+    this.estudiantesMatematicas = this.estudiantes.filter(estudiante => estudiante.curso === 'Matematicas');
   }
 
-  calcularPorcentajeAsistencia(estudiante: Estudiante): number {
-    return ((estudiante.asistencias / this.totalClases) * 100) || 0;
+  // Método para listar los estudiantes de Física
+  listarEstudiantesFisica() {
+    this.estudiantesFisica = this.estudiantes.filter(estudiante => estudiante.curso === 'Fisica');
   }
 
-  guardarAsistencia() {
-    const cursoId = 'matematicas123';
+  // Método para listar los estudiantes de Química
+  listarEstudiantesQuimica() {
+    this.estudiantesQuimica = this.estudiantes.filter(estudiante => estudiante.curso === 'Quimica');
+  }
+
+  guardarAsistencia(cursoId: string) {
     const asistencia = this.estudiantes.map(estudiante => ({
       id: estudiante.id,
       nombre: estudiante.nombre,
@@ -118,55 +114,15 @@ export class MatematicasPage implements OnInit {
       })
       .then(() => {
         console.log('Asistencia guardada exitosamente');
-        this.mostrarAlerta('Clase guardada exitosamente');
+        this.mostrarAlerta('Asistencia guardada exitosamente');
       })
       .catch(error => {
         console.error('Error al guardar la asistencia', error);
       });
   }
 
-  crearNuevaClase() {
-    const cursoId = 'matematicas123';
-
-    const asistentes = this.estudiantes
-      .filter(estudiante => estudiante.estado === 'Presente')
-      .map(estudiante => ({
-        id: estudiante.id,
-        nombre: estudiante.nombre,
-        apellido: estudiante.apellido,
-        correo: estudiante.correo,
-        asistencias: estudiante.asistencias,
-      }));
-
-    const nuevaClase = {
-      fecha: new Date().toISOString(),
-      descripcion: 'Clase de Matemáticas',
-      asistentes: asistentes
-    };
-
-    this.firestore
-      .collection('clases')
-      .doc(cursoId)
-      .collection('registros')
-      .add(nuevaClase)
-      .then(() => {
-        console.log('Nueva clase creada exitosamente');
-        this.totalClases++;
-        this.cargarEstudiantes();
-        this.mostrarAlerta('Clase creada exitosamente'); // Alerta después de crear la clase
-      })
-      .catch(error => {
-        console.error('Error al crear una nueva clase', error);
-      });
-  }
-
-  contarAsistentes(): number {
-    return this.estudiantes.filter(estudiante => estudiante.estado === 'Presente').length;
-  }
-
   listarClases() {
-    const cursoId = 'matematicas123';
-
+    const cursoId = 'matematicas123';  // Asegúrate de manejar bien los IDs de los cursos en tu lógica
     this.firestore.collection('clases').doc(cursoId).collection('registros')
       .valueChanges()
       .subscribe((data: DocumentData[]) => {
@@ -174,7 +130,7 @@ export class MatematicasPage implements OnInit {
           fecha: item['fecha'],
           descripcion: item['descripcion'],
           asistentes: item['asistentes'] || []
-        })) as Clase[];
+        })) as any[];
       }, error => {
         console.error('Error al cargar las clases', error);
       });

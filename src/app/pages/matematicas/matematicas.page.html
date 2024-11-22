@@ -1,54 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/misclases-p"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Detalles del Curso</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="crearNuevaClase()" color="primary">
-        Nueva Clase
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-title>
-      Alumnos Asistentes: {{ contarAsistentes() }}
-    </ion-title>
+    <ion-title>Gestión de Cursos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-card *ngFor="let estudiante of estudiantes" class="estudiante-card">
-      <ion-card-content>
-        <ion-item>
-          <ion-label>
-            <h2>{{ estudiante.nombre }} {{ estudiante.apellido }}</h2>
-            <p>
-              <strong>Estado:</strong> {{ estudiante.estado || 'Sin registrar' }}<br>
-              <strong>Total De Asistencias:</strong> {{ estudiante.asistencias }}
-            </p>
-          </ion-label>
-          <ion-button (click)="eliminarEstudiante(estudiante.id)" color="danger" fill="outline" slot="end">
-            Eliminar
-          </ion-button>
+<ion-content>
+  <!-- Curso 1: Matemáticas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Curso de Matemáticas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button (click)="guardarAsistencia('matematicas123')" color="primary">Guardar Asistencia</ion-button>
+      <ion-button (click)="listarEstudiantesMatematicas()" color="secondary">Listar Estudiantes</ion-button>
+      <ion-img *ngIf="qrCodeDataUrlMatematicas" [src]="qrCodeDataUrlMatematicas" alt="QR Matemáticas" style="max-width: 150px; max-height: 150px;"></ion-img>
+      <ion-list *ngIf="estudiantesMatematicas.length">
+        <ion-item *ngFor="let estudiante of estudiantesMatematicas">
+          {{ estudiante.nombre }} {{ estudiante.apellido }}
         </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-</ion-content>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button routerLink="/generar-qr" expand="full">
-        Generar QR
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/reportes" expand="full">
-        Reportes
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+  <!-- Curso 2: Física -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Curso de Física</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button (click)="guardarAsistencia('fisica123')" color="secondary">Guardar Asistencia</ion-button>
+      <ion-button (click)="listarEstudiantesFisica()" color="tertiary">Listar Estudiantes</ion-button>
+      <ion-img *ngIf="qrCodeDataUrlFisica" [src]="qrCodeDataUrlFisica" alt="QR Física" style="max-width: 150px; max-height: 150px;"></ion-img>
+      <ion-list *ngIf="estudiantesFisica.length">
+        <ion-item *ngFor="let estudiante of estudiantesFisica">
+          {{ estudiante.nombre }} {{ estudiante.apellido }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Curso 3: Química -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Curso de Química</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button (click)="guardarAsistencia('quimica123')" color="tertiary">Guardar Asistencia</ion-button>
+      <ion-button (click)="listarEstudiantesQuimica()" color="danger">Listar Estudiantes</ion-button>
+      <ion-img *ngIf="qrCodeDataUrlQuimica" [src]="qrCodeDataUrlQuimica" alt="QR Química" style="max-width: 150px; max-height: 150px;"></ion-img>
+      <ion-list *ngIf="estudiantesQuimica.length">
+        <ion-item *ngFor="let estudiante of estudiantesQuimica">
+          {{ estudiante.nombre }} {{ estudiante.apellido }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -41,7 +41,7 @@ export class ReportesPage implements OnInit {
 
   cargarEstudiantes() {
     this.crudServ.listarestudiantes().subscribe(
-      data => {
+      (      data: any[]) => {
         this.estudiantes = data
           .filter((estudiante: any) => estudiante.rol === 'estudiante')
           .map((estudiante: any) => ({
@@ -54,7 +54,7 @@ export class ReportesPage implements OnInit {
             clasesAsistidas: estudiante.clasesAsistidas || this.totalClases,
           }));
       },
-      error => {
+      (      error: any) => {
         console.error('Error loading students', error);
       }
     );
@@ -84,7 +84,7 @@ export class ReportesPage implements OnInit {
           descripcion: item['descripcion'],
           asistentes: item['asistentes'] || []
         })) as Clase[];
-      }, error => {
+      }, (error: any) => {
         console.error('Error al cargar las clases', error);
       });
   }

@@ -27,7 +27,7 @@ export class ListarPage implements OnInit {
   }
 
   cargarEstudiantes() {
-    this.crudServ.listarestudiantes().subscribe(data => {
+    this.crudServ.listarestudiantes().subscribe((data: any[]) => {
       this.estudiantes = data
         .filter((estudiante: any) => estudiante.rol === 'estudiante') // Filtrar por rol
         .map((estudiante: any) => ({
@@ -40,7 +40,7 @@ export class ListarPage implements OnInit {
           asistencia: '', // Inicializa con un valor por defecto
           porcentajeAsistencia: this.calcularPorcentajeAsistencia(estudiante) // Calcula el porcentaje
         }));
-    }, error => {
+    }, (error: any) => {
       console.error('Error loading students', error);
     });
   }
