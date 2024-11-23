@@ -7,24 +7,23 @@
 <ion-content>
   <ion-item>
     <ion-label position="floating">Correo</ion-label>
-    <ion-input type="email" [(ngModel)]="Usuario"></ion-input>
+    <ion-input type="email" [(ngModel)]="Usuario" name="usuario"></ion-input>
   </ion-item>
   
   <ion-item>
     <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password" [(ngModel)]="Contrasena"></ion-input>
+    <ion-input type="password" [(ngModel)]="Contrasena" name="password"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Rol</ion-label>
     <ion-select [(ngModel)]="Rol">
-      <ion-select-option value="estudiante">Estudiante</ion-select-option>
-      <ion-select-option value="profesor">Profesor</ion-select-option>
+      <ion-select-option value="estudiante" name="estudiante">Estudiante</ion-select-option>
+      <ion-select-option value="profesor" name="profesor">Profesor</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <ion-button expand="full" (click)="iniciarSesion()">Iniciar Sesión</ion-button>
-  
+  <ion-button expand="full" (click)="iniciarSesion()" name="log">Iniciar Sesión</ion-button>
   <ion-button expand="full" (click)="validarRegistro()">Registrar</ion-button>
   <ion-button expand="full" (click)="validarTerminos()">Términos y Condiciones</ion-button>
   <ion-button expand="full" (click)="navegarRecuperarContrasena()">Recuperar Contraseña</ion-button>

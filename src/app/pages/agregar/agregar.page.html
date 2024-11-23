@@ -16,17 +16,17 @@
   <!-- Contenedor principal con márgenes para separar del toolbar -->
   <div style="margin-top: 30px; padding: 25px; display: flex; align-items: center; justify-content: center; width: 100%;">
     <ion-list style="width: 100%; max-width: 400px;">
-      <ion-item>
-        <ion-input [(ngModel)]="nuevo_estudiante.nombre" label="Nombre:" placeholder="Ingresa tu nombre"></ion-input>
+      <ion-item >
+        <ion-input [(ngModel)]="nuevo_estudiante.nombre" label="Nombre:" placeholder="Ingresa tu nombre" name="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="nuevo_estudiante.apellido" label="Apellido:" placeholder="Ingrese Apellido"></ion-input>
+        <ion-input [(ngModel)]="nuevo_estudiante.apellido" label="Apellido:" placeholder="Ingrese Apellido" name="apellido"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="nuevo_estudiante.correo" label="Correo:" placeholder="Ingrese Correo"></ion-input>
+        <ion-input [(ngModel)]="nuevo_estudiante.correo" label="Correo:" placeholder="Ingrese Correo" name="correo"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="nuevo_estudiante.clave" label="Clave:" type="password" placeholder="Ingrese Clave"></ion-input>
+        <ion-input [(ngModel)]="nuevo_estudiante.clave" label="Clave:" type="password" placeholder="Ingrese Clave" name="clave"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Rol</ion-label>
@@ -35,7 +35,7 @@
           <ion-select-option value="profesor">Profesor</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-button expand="block" (click)="grabar()" style="margin-top: 25px;" color="warning">Finalizar Registro</ion-button>
+      <ion-button expand="block" (click)="grabar()" style="margin-top: 25px;" color="warning" name="log">Finalizar Registro</ion-button>
       <ion-button expand="block" routerLink="/login" style="margin-top: 25px;" color="warning">Regresar</ion-button>
     </ion-list>
   </div>
