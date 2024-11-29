@@ -81,13 +81,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/asistencia/asistencia.module').then(m => m.AsistenciaPageModule),
   },
   {
-    path: '**',
-    loadChildren: () => import('./pages/p404/p404.module').then(m => m.P404PageModule),
+    path: 'curso-movil',
+    loadChildren: () => import('./curso-movil/curso-movil.module').then( m => m.CursoMovilPageModule)
   },
   {
     path: 'cursos',
     loadChildren: () => import('./cursos/cursos.module').then( m => m.CursosPageModule)
   },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/p404/p404.module').then(m => m.P404PageModule),
+  },
+
+
 
 ];
 

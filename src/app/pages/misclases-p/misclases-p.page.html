@@ -25,20 +25,10 @@
         <p>{{ card.additionalContent }}</p>
 
         <!-- Botón "Ver curso" -->
-        <ion-button expand="block" routerLink="/matematicas">
+        <ion-button expand="block" [routerLink]="card.route">
           Ver curso
         </ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
-
-  <!-- Navegación -->
-  <ion-footer>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Ir a Página Principal</ion-title>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>

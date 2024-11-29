@@ -1,58 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Gestión de Cursos</ion-title>
+    <ion-title>Matemáticas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Curso 1: Matemáticas -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Curso de Matemáticas</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button (click)="guardarAsistencia('matematicas123')" color="primary">Guardar Asistencia</ion-button>
-      <ion-button (click)="listarEstudiantesMatematicas()" color="secondary">Listar Estudiantes</ion-button>
-      <ion-img *ngIf="qrCodeDataUrlMatematicas" [src]="qrCodeDataUrlMatematicas" alt="QR Matemáticas" style="max-width: 150px; max-height: 150px;"></ion-img>
-      <ion-list *ngIf="estudiantesMatematicas.length">
-        <ion-item *ngFor="let estudiante of estudiantesMatematicas">
-          {{ estudiante.nombre }} {{ estudiante.apellido }}
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <!-- Botón para crear nueva clase -->
+  <ion-button (click)="crearNuevaClase()" expand="full" color="primary">
+    Crear Nueva Clase
+  </ion-button>
 
-  <!-- Curso 2: Física -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Curso de Física</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button (click)="guardarAsistencia('fisica123')" color="secondary">Guardar Asistencia</ion-button>
-      <ion-button (click)="listarEstudiantesFisica()" color="tertiary">Listar Estudiantes</ion-button>
-      <ion-img *ngIf="qrCodeDataUrlFisica" [src]="qrCodeDataUrlFisica" alt="QR Física" style="max-width: 150px; max-height: 150px;"></ion-img>
-      <ion-list *ngIf="estudiantesFisica.length">
-        <ion-item *ngFor="let estudiante of estudiantesFisica">
-          {{ estudiante.nombre }} {{ estudiante.apellido }}
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <!-- Botón para ir a la página de escanear QR -->
+  <ion-button routerLink="/generar-qr" expand="full" color="tertiary">
+    Ir a Escanear Código QR
+  </ion-button>
 
-  <!-- Curso 3: Química -->
-  <ion-card>
+  <!-- Mostrar estudiantes de Matemáticas -->
+  <ion-card *ngFor="let estudiante of estudiantesMatematicas">
     <ion-card-header>
-      <ion-card-title>Curso de Química</ion-card-title>
+      <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-button (click)="guardarAsistencia('quimica123')" color="tertiary">Guardar Asistencia</ion-button>
-      <ion-button (click)="listarEstudiantesQuimica()" color="danger">Listar Estudiantes</ion-button>
-      <ion-img *ngIf="qrCodeDataUrlQuimica" [src]="qrCodeDataUrlQuimica" alt="QR Química" style="max-width: 150px; max-height: 150px;"></ion-img>
-      <ion-list *ngIf="estudiantesQuimica.length">
-        <ion-item *ngFor="let estudiante of estudiantesQuimica">
-          {{ estudiante.nombre }} {{ estudiante.apellido }}
-        </ion-item>
-      </ion-list>
+      <p>Asistencias: {{ estudiante.asistencias }} / {{ totalClases }}</p>
+      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistencia(estudiante) }}%</p>
+
+      <!-- Mostrar mensaje si el porcentaje de asistencia es menor al 70% -->
+      <ion-note *ngIf="calcularPorcentajeAsistencia(estudiante) < 70" color="danger">
+        En riesgo de reprobar por asistencia
+      </ion-note>
+
+      <!-- Botones para marcar asistencia -->
+      <ion-button (click)="actualizarAsistencias(estudiante.id, true)" color="success">Marcar Asistido</ion-button>
+      <ion-button (click)="actualizarAsistencias(estudiante.id, false)" color="danger">Marcar No Asistido</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

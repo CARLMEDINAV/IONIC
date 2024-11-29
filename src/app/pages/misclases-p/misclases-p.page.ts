@@ -11,43 +11,22 @@ export class MisclasesPPage implements OnInit {
   expandedCardId: number | null = null; // ID de la tarjeta actualmente expandida
   filteredCards: any[] = []; // Tarjetas filtradas para la búsqueda
 
-  // Datos para las tarjetas
+  // Datos para las tarjetas (dos cursos diferentes con rutas distintas)
   cards = [
     {
       id: 1,
-      title: 'Programación de Base de Datos 011D',
+      title: 'Matematicas 011D',
       basicContent: 'Martes - Jueves',
       additionalContent: '100% de asistencias en promedio de la sección',
-      route: '/curso1',
-    },
-    {
-      id: 2,
-      title: 'Programación de Base de Datos 012D',
-      basicContent: 'Lunes - Viernes',
-      additionalContent: '87% de asistencias en promedio de la sección',
-      route: '/curso2',
-    },
-    {
-      id: 3,
-      title: 'Programación de Base de Datos 010D',
-      basicContent: 'Lunes - Miércoles',
-      additionalContent: '98% de asistencias en promedio de la sección',
-      route: '/curso3',
+      route: '/curso-database',  // Ruta para el curso de Base de Datos
     },
     {
       id: 4,
       title: 'Programación de Aplicaciones Móviles 010D',
       basicContent: 'Martes - Jueves',
       additionalContent: '80% de asistencias en promedio de la sección',
-      route: '/curso4',
-    },
-    {
-      id: 5,
-      title: 'Consulta de Base de Datos 09D',
-      basicContent: 'Miércoles - Viernes',
-      additionalContent: '78% de asistencias en promedio de la sección',
-      route: '/curso5',
-    },
+      route: '/curso-movil',  // Ruta para el curso de Aplicaciones Móviles
+    }
   ];
 
   constructor(private navCtrl: NavController) {}
@@ -63,7 +42,7 @@ export class MisclasesPPage implements OnInit {
 
   // Función para manejar la navegación al presionar "Ver curso"
   verDetalles(route: string) {
-    this.navCtrl.navigateForward(route);
+    this.navCtrl.navigateForward(route);  // Navega a la ruta especificada
   }
 
   // Función para filtrar las tarjetas según el término de búsqueda
