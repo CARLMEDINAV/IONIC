@@ -1,37 +1,55 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Matemáticas</ion-title>
+    <ion-title>Matemáticas y Física</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Botón para crear nueva clase -->
+  <!-- Botón para crear nueva clase de Matemáticas -->
   <ion-button (click)="crearNuevaClase()" expand="full" color="primary">
-    Crear Nueva Clase
+    Crear Nueva Clase de Matemáticas
   </ion-button>
 
-  <!-- Botón para ir a la página de escanear QR -->
+  <!-- Botón para ir a escanear código QR -->
   <ion-button routerLink="/generar-qr" expand="full" color="tertiary">
     Ir a Escanear Código QR
   </ion-button>
 
-  <!-- Mostrar estudiantes de Matemáticas -->
+  <!-- Sección para estudiantes de Matemáticas -->
   <ion-card *ngFor="let estudiante of estudiantesMatematicas">
     <ion-card-header>
       <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Asistencias: {{ estudiante.asistencias }} / {{ totalClases }}</p>
-      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistencia(estudiante) }}%</p>
-
-      <!-- Mostrar mensaje si el porcentaje de asistencia es menor al 70% -->
-      <ion-note *ngIf="calcularPorcentajeAsistencia(estudiante) < 70" color="danger">
+      <p>Asistencias: {{ estudiante.asistencias }} / {{ totalClasesMatematicas }}</p>
+      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaMate(estudiante) }}%</p>
+      <ion-note *ngIf="calcularPorcentajeAsistenciaMate(estudiante) < 70" color="danger">
         En riesgo de reprobar por asistencia
       </ion-note>
-
-      <!-- Botones para marcar asistencia -->
       <ion-button (click)="actualizarAsistencias(estudiante.id, true)" color="success">Marcar Asistido</ion-button>
-      <ion-button (click)="actualizarAsistencias(estudiante.id, false)" color="danger">Marcar No Asistido</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón para crear nueva clase de Física -->
+  <ion-button (click)="crearNuevaClaseFisica()" expand="full" color="secondary">
+    Crear Nueva Clase de Física
+  </ion-button>
+
+  <!-- Sección para estudiantes de Física -->
+  <ion-card *ngFor="let estudiante of estudiantesMatematicas">
+    <ion-card-header>
+      <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Asistencias: {{ estudiante.clasesAsistidasFisica }} / {{ totalClasesFisica }}</p>
+      <p>Clases Realizadas: {{totalClasesFisica }}</p>
+      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaFisi(estudiante) }}%</p>
+      <ion-note *ngIf="calcularPorcentajeAsistenciaFisi(estudiante) < 70" color="danger">
+        En riesgo de reprobar por asistencia
+      </ion-note>
+      <ion-button (click)="actualizarAsistenciasFisi(estudiante.id, true)" color="success">
+        Marcar Asistido
+      </ion-button>      
     </ion-card-content>
   </ion-card>
 </ion-content>

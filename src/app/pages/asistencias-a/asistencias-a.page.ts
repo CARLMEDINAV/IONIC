@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AsistenciaService } from 'src/app/servicio/asistencia.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-asistencias-a',
@@ -6,69 +8,101 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./asistencias-a.page.scss'],
 })
 export class AsistenciasAPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  estudiantesMatematicas: any[] = [];
+  estudiantesFisica: any[] = [];
   expandedCardId: number | null = null; // ID de la tarjeta actualmente expandida
+  estudiantes: any[] = [];
 
-  // Datos para las tarjetas
   cards = [
     {
       id: 1,
-      title: 'Arquitectura',
-      basicContent: '7 de 7 clases',
-      additionalContent: `100% de asistencias a este curso (sin riesgo de RI)`
+      title: 'Matemáticas',
+      basicContent: '',
+      additionalContent: `100% de asistencias a este curso (sin riesgo de RI)`,
     },
     {
       id: 2,
-      title: 'Calidad de software',
-      basicContent: '7 de 7 clases',
-      additionalContent: '85.2% de asistencias a este curso (riesgo bajo de RI)'
+      title: 'Física',
+      basicContent: '',
+      additionalContent: '85.2% de asistencias a este curso (riesgo bajo de RI)',
     },
-    {
-      id: 3,
-      title: 'Doctrina social de la iglesia ',
-      basicContent: '6 de 7 clases',
-      additionalContent: '25% de asistencias a este curso (sin riesgo de RI)'
-    },
-    {
-      id: 4,
-      title: 'Estadistica descriptiva',
-      basicContent: '7 de 7 clases',
-      additionalContent: '87,5% de asistencias a este curso (sin riesgo de RI)'
-    },
-    {
-      id: 5,
-      title: 'Etica para el trabajo',
-      basicContent: '4 de 4 clases ',
-      additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
-    },
-    {
-      id: 6,
-      title: 'Proceso de portafolio',
-      basicContent: '6 de 7 clases',
-      additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
-    },
-    {
-      id: 7,
-      title: 'Programacion de aplicaciones moviles',
-      basicContent: '5 de 5 clases',
-      additionalContent: '100% de asistencias a este curso (sin riesgo de RI)'
-    }
-
   ];
+
+  constructor(
+    private crudServ: AsistenciaService,
+    private firestore: AngularFirestore
+  ) {}
+
+  ngOnInit() {
+    this.cargarEstudiantesMatematicas();
+    this.listarClases(); // Matemáticas
+    this.listarClasesFisica(); // Física
+  }
 
   // Función para alternar el estado expandido de una tarjeta
   toggleCard(id: number) {
     this.expandedCardId = this.expandedCardId === id ? null : id;
-
   }
 
   getCurrentDate(): string {
     const date = new Date();
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; // Formato: DD/MM/YYYY
   }
-  
+
+  cargarEstudiantesMatematicas() {
+    this.crudServ.listarestudiantes().subscribe(
+      (data: any[]) => {
+        console.log('Estudiantes cargados:', data); // Verifica los datos aquí
+        this.estudiantes = data
+          .filter((estudiante) => estudiante.rol === 'estudiante')
+          .map((estudiante) => ({
+            id: estudiante.id,
+            nombre: estudiante.nombre,
+            apellido: estudiante.apellido || '',
+            correo: estudiante.correo,
+            estado: estudiante.estado || 'Presente',
+            asistencias: estudiante.asistencias || 0,
+            clasesAsistidasFisica: estudiante.clasesAsistidasFisica || 0,
+            clasesAsistidas: estudiante.clasesAsistidas || 0,
+            curso: estudiante.curso || 'Matemáticas',
+          }));
+
+        // Filtrar estudiantes para cada curso
+        this.listarEstudiantesMatematicas();
+        this.listarEstudiantesFisica();
+      },
+      (error) => {
+        console.error('Error al cargar los estudiantes', error);
+      }
+    );
+  }
+
+  listarEstudiantesMatematicas() {
+    this.estudiantesMatematicas = this.estudiantes.filter(
+      (estudiante) => estudiante.curso === 'Matemáticas'
+    );
+    this.updateCardBasicContent(1, `${this.estudiantesMatematicas.length} estudiantes en Matemáticas`);
+  }
+
+  listarEstudiantesFisica() {
+    this.estudiantesFisica = this.estudiantes.filter(
+      (estudiante) => estudiante.curso === 'Física'
+    );
+    this.updateCardBasicContent(2, `${this.estudiantesFisica.length} estudiantes en Física`);
+  }
+
+  updateCardBasicContent(cardId: number, content: string) {
+    const card = this.cards.find((card) => card.id === cardId);
+    if (card) {
+      card.basicContent = content;
+    }
+  }
+
+  listarClases() {
+    // Implementación para listar clases de Matemáticas
+  }
+
+  listarClasesFisica() {
+    // Implementación para listar clases de Física
+  }
 }

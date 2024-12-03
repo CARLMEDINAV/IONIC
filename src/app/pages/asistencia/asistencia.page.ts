@@ -10,8 +10,9 @@ import { CrudfirebaseService } from '../../servicio/crudfirebase.service';
 })
 export class AsistenciaPage implements OnInit {
   nuevo_estudiante: Estudiante = {
-    nombre: '', apellido: '',correo: '',clave: '',  rol: 'estudiante', // Inicializa con un rol específico
-    asistencias: 0
+    nombre: '', apellido: '', correo: '', clave: '', rol: 'estudiante', // Inicializa con un rol específico
+    asistencias: 0,
+    clasesAsistidasFisica: 0
   };
   listado_estudiante: Estudiante[] = [];
 
@@ -40,7 +41,7 @@ export class AsistenciaPage implements OnInit {
         // Incrementa el contador de asistencias del estudiante existente
         this.Asistencia.modificar(estudianteExistente.id, {
           ...estudianteExistente,
-          asistencias: estudianteExistente.asistencias + 1
+          asistencias: estudianteExistente.asistencias 
         }).then(() => {
           this.mostrarAlerta('Registro de asistencia exitoso.');
         }).catch(err => console.error("Error incrementando asistencia", err));

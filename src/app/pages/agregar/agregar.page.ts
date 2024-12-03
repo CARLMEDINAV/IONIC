@@ -16,7 +16,8 @@ export class AgregarPage implements OnInit {
     correo: '',
     clave: '',
     rol: 'estudiante', // Inicializa con un rol específico
-    asistencias: 0
+    asistencias: 0,
+    clasesAsistidasFisica: 0
   };
   listado_estudiante: Estudiante[] = [];
 
@@ -78,7 +79,8 @@ limpiarFormulario() {
     correo: '',
     clave: '',
     rol: 'estudiante', // o el valor por defecto que desees
-    asistencias: 0
+    asistencias: 0 ,
+    clasesAsistidasFisica : 0
   };
 }
 

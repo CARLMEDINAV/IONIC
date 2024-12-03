@@ -11,20 +11,21 @@ export interface Estudiante {
   clave: string;
   rol: 'estudiante' | 'profesor';
   asistencias: number;
+  clasesAsistidasFisica: number; // Campo nuevo para asistencia física
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AsistenciaService {
-  private collectionPath = 'estudiantes'; // Asegúrate de que esta sea la colección correcta
+  private collectionPath = 'estudiantes';
 
   constructor(
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth
   ) {}
 
-  // Método para incrementar la asistencia del estudiante
   async incrementarAsistencia(id: string): Promise<void> {
     const estudianteRef = this.firestore.collection(this.collectionPath).doc(id);
     
@@ -49,10 +50,8 @@ export class AsistenciaService {
     }
   }
 
-  // Método para registrar un nuevo usuario
   async registrarUsuario(correo: string, contrasena: string, nombre: string, apellido: string): Promise<void> {
     try {
-      // Verifica si el correo ya está en uso
       const estudianteExistente = await this.obtenerEstudiantePorCorreo(correo);
       if (estudianteExistente) {
         throw new Error('El correo ya está registrado');
@@ -65,89 +64,78 @@ export class AsistenciaService {
         correo,
         nombre,
         apellido,
-        rol: 'estudiante', // O asigna el rol que corresponda
-        asistencias: 0 // Inicializa la asistencia
+        rol: 'estudiante',
+        asistencias: 0,
+        clasesAsistidasFisica:0
       });
       console.log('Usuario registrado exitosamente');
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
-      throw error; // Propaga el error para manejarlo en el componente
+      throw error;
     }
   }
 
-  // Método para validar un usuario
   async validarUsuario(correo: string, contrasena: string): Promise<Estudiante | null> {
     try {
-      // Verifica si el usuario existe en Firestore
       const estudianteData = await this.obtenerEstudiantePorCorreo(correo);
-
       if (!estudianteData) {
         throw new Error('Correo no encontrado en la base de datos.');
       }
 
-      // Asegúrate de que el ID no sea vacío
       if (!estudianteData.id) {
         throw new Error('ID de estudiante no encontrado.');
       }
 
-      // Validar la contraseña
       const passwordIsValid = await this.validarContrasena(estudianteData.id, contrasena);
       
       if (!passwordIsValid) {
         throw new Error('Contraseña incorrecta.');
       }
 
-      return estudianteData; // Devuelve los datos del usuario si todo está bien
+      return estudianteData;
     } catch (error) {
       console.error('Error en la validación del usuario:', error);
-      throw error; // Propaga el error para manejarlo en el componente
+      throw error;
     }
   }
 
-  // Método para validar la contraseña
   async validarContrasena(id: string, contrasena: string): Promise<boolean> {
     if (!id) {
       console.error('ID de estudiante es vacío.');
-      return false; // ID vacío, no se puede validar
+      return false;
     }
 
     const estudianteDoc = await this.firestore.collection(this.collectionPath).doc(id).ref.get();
     
     if (estudianteDoc.exists) {
       const estudiante = estudianteDoc.data() as Estudiante;
-      return estudiante.clave === contrasena; // Compara las contraseñas
+      return estudiante.clave === contrasena;
     }
     
-    return false; // Usuario no encontrado
+    return false;
   }
 
-  // Método para obtener los datos del usuario
   async obtenerDatosUsuario(usuario: string): Promise<Estudiante | null> {
     const userDoc = await this.firestore.collection(this.collectionPath).doc(usuario).ref.get();
     return userDoc.exists ? (userDoc.data() as Estudiante) : null;
   }
 
-  // Crear un nuevo estudiante en la colección
   crearestudiante(estudiante: Estudiante) {
     return this.firestore.collection(this.collectionPath).add(estudiante);
   }
 
-  // Listar todos los estudiantes de la colección
   listarestudiantes(): Observable<Estudiante[]> {
     return this.firestore.collection<Estudiante>(this.collectionPath).valueChanges({ idField: 'id' });
   }
 
-  // Eliminar un estudiante por ID
   eliminar(id: string) {
     return this.firestore.collection(this.collectionPath).doc(id).delete();
   }
 
-  // Modificar un estudiante existente por ID
   modificar(id: string, estudiante: Estudiante) {
     return this.firestore.collection(this.collectionPath).doc(id).update(estudiante);
   }
 
-  // Método para obtener un estudiante por su correo electrónico
   async obtenerEstudiantePorCorreo(correo: string): Promise<Estudiante | null> {
     const estudiantesSnapshot = await this.firestore
       .collection(this.collectionPath, ref => ref.where('correo', '==', correo))
@@ -156,17 +144,15 @@ export class AsistenciaService {
 
     if (estudiantesSnapshot && !estudiantesSnapshot.empty) {
       const estudianteData = estudiantesSnapshot.docs[0].data() as Estudiante;
-      // Agrega el ID del documento a los datos del estudiante
       return {
         ...estudianteData,
-        id: estudiantesSnapshot.docs[0].id // Obtén el ID del documento
+        id: estudiantesSnapshot.docs[0].id
       };
     }
-
-    return null; // No existe un usuario con este correo
+ 
+    return null;
   }
 
-  // Método para obtener el porcentaje de asistencia
   async obtenerAsistencia(usuario: string): Promise<number> {
     const estudianteDoc = await this.firestore.collection(this.collectionPath).doc(usuario).ref.get();
     
@@ -175,17 +161,38 @@ export class AsistenciaService {
     }
 
     const estudiante = estudianteDoc.data() as Estudiante;
-    const totalClases = await this.obtenerTotalClases(); // Implementa este método según tus necesidades
+    const totalClases = await this.obtenerTotalClases();
     const clasesAsistidas = estudiante.asistencias || 0;
 
-    if (totalClases === 0) return 0; // Para evitar división por cero
+    if (totalClases === 0) return 0;
 
-    return (clasesAsistidas / totalClases) * 100; // Devuelve el porcentaje de asistencia
+    return (clasesAsistidas / totalClases) * 100;
   }
 
-  // Método para obtener el total de clases (debes implementar esta lógica)
   async obtenerTotalClases(): Promise<number> {
-    // Implementa la lógica para obtener el total de clases (puede ser un número fijo o consultado desde otra colección)
-    return 10; // Ejemplo de total de clases
+    return 10;
   }
+
+  async obtenerAsistenciaFisica(usuario: string): Promise<number> {
+    const estudianteDoc = await this.firestore.collection(this.collectionPath).doc(usuario).ref.get();
+    
+    if (!estudianteDoc.exists) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    const estudiante = estudianteDoc.data() as Estudiante;
+    const totalClasesFisica = await this.obtenerTotalClases();
+    const clasesAsistidasFisica = estudiante.clasesAsistidasFisica || 0;
+
+    if (totalClasesFisica === 0) return 0;
+
+    return (clasesAsistidasFisica / totalClasesFisica) * 100;
+  }
+
+  async obtenerTotalClasesFisca(): Promise<number> {
+    return 10;
+  }
+
+
+  
 }
