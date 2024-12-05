@@ -19,9 +19,10 @@ export class MatematicasPage implements OnInit {
   estudiantesQuimica: any[] = [];
   clases: any[] = [];
   clasesFisica: any[] = [];
-  totalClases = 0; // Número total de clases disponibles
-  totalClasesMatematicas = 0; // Total de clases de Matemáticas
-  totalClasesFisica = 0; // Total de clases de Física
+  totalClases = 1; // Número total de clases disponibles
+  totalClasesMatematicas = 1; // Total de clases de Matemáticas
+  totalClasesFisica = 1; // Total de clases de Física
+  cursoSeleccionado: string | null = null;
 
   constructor(
     private crudServ: AsistenciaService,

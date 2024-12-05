@@ -5,51 +5,66 @@
 </ion-header>
 
 <ion-content>
-  <!-- Botón para crear nueva clase de Matemáticas -->
-  <ion-button (click)="crearNuevaClase()" expand="full" color="primary">
-    Crear Nueva Clase de Matemáticas
-  </ion-button>
+  <!-- Cuadro de búsqueda para seleccionar curso -->
+  <ion-item>
+    <ion-label>Seleccionar Curso</ion-label>
+    <ion-select [(ngModel)]="cursoSeleccionado" placeholder="Elige un curso">
+      <ion-select-option value="matematicas">Matemáticas</ion-select-option>
+      <ion-select-option value="fisica">Física</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Botón para crear nueva clase según el curso seleccionado -->
+  <ng-container *ngIf="cursoSeleccionado === 'matematicas'">
+    <ion-button (click)="crearNuevaClase()" expand="full" color="primary">
+      Crear Nueva Clase de Matemáticas
+    </ion-button>
+
+    <!-- Sección para estudiantes de Matemáticas -->
+    <ion-card *ngFor="let estudiante of estudiantesMatematicas">
+      <ion-card-header>
+        <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Clases Realizadas: {{ totalClasesMatematicas }}</p>
+        <p>Asistencias: {{ estudiante.asistencias }} de {{ totalClasesMatematicas }}</p>
+        <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaMate(estudiante) }}%</p>
+        <ion-note *ngIf="calcularPorcentajeAsistenciaMate(estudiante) < 70" color="danger">
+          En riesgo de reprobar por asistencia
+        </ion-note>
+        <ion-button (click)="actualizarAsistencias(estudiante.id, true)" color="success">
+          Marcar Asistido
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="cursoSeleccionado === 'fisica'">
+    <ion-button (click)="crearNuevaClaseFisica()" expand="full" color="secondary">
+      Crear Nueva Clase de Física
+    </ion-button>
+
+    <!-- Sección para estudiantes de Física -->
+    <ion-card *ngFor="let estudiante of estudiantesMatematicas">
+      <ion-card-header>
+        <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Clases Realizadas: {{ totalClasesFisica }}</p>
+        <p>Asistencias: {{ estudiante.clasesAsistidasFisica }} / {{ totalClasesFisica }}</p>
+        <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaFisi(estudiante) }}%</p>
+        <ion-note *ngIf="calcularPorcentajeAsistenciaFisi(estudiante) < 70" color="danger">
+          En riesgo de reprobar por asistencia
+        </ion-note>
+        <ion-button (click)="actualizarAsistenciasFisi(estudiante.id, true)" color="success">
+          Marcar Asistido
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 
   <!-- Botón para ir a escanear código QR -->
   <ion-button routerLink="/generar-qr" expand="full" color="tertiary">
     Ir a Escanear Código QR
   </ion-button>
-
-  <!-- Sección para estudiantes de Matemáticas -->
-  <ion-card *ngFor="let estudiante of estudiantesMatematicas">
-    <ion-card-header>
-      <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Asistencias: {{ estudiante.asistencias }} / {{ totalClasesMatematicas }}</p>
-      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaMate(estudiante) }}%</p>
-      <ion-note *ngIf="calcularPorcentajeAsistenciaMate(estudiante) < 70" color="danger">
-        En riesgo de reprobar por asistencia
-      </ion-note>
-      <ion-button (click)="actualizarAsistencias(estudiante.id, true)" color="success">Marcar Asistido</ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Botón para crear nueva clase de Física -->
-  <ion-button (click)="crearNuevaClaseFisica()" expand="full" color="secondary">
-    Crear Nueva Clase de Física
-  </ion-button>
-
-  <!-- Sección para estudiantes de Física -->
-  <ion-card *ngFor="let estudiante of estudiantesMatematicas">
-    <ion-card-header>
-      <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Asistencias: {{ estudiante.clasesAsistidasFisica }} / {{ totalClasesFisica }}</p>
-      <p>Clases Realizadas: {{totalClasesFisica }}</p>
-      <p>Porcentaje de asistencia: {{ calcularPorcentajeAsistenciaFisi(estudiante) }}%</p>
-      <ion-note *ngIf="calcularPorcentajeAsistenciaFisi(estudiante) < 70" color="danger">
-        En riesgo de reprobar por asistencia
-      </ion-note>
-      <ion-button (click)="actualizarAsistenciasFisi(estudiante.id, true)" color="success">
-        Marcar Asistido
-      </ion-button>      
-    </ion-card-content>
-  </ion-card>
 </ion-content>

@@ -1,28 +1,48 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/matematicas"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Clase de Matemáticas</ion-title>
+    <ion-title>Gestión de Asistencias</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="light">
-  <ion-list>
-    <ion-item *ngFor="let clase of clases">
-      <ion-label>
-        <h2>{{ clase.descripcion }}</h2>
-        <p><strong>Fecha:</strong> {{ clase.fecha }}</p>
-        <p><strong>Asistentes:</strong> {{ clase.asistentes.length }}</p>
-        <ion-list>
-          <ion-item *ngFor="let estudiante of clase.asistentes">
-            {{ estudiante.nombre }} {{ estudiante.apellido }}
-          </ion-item>
-        </ion-list>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-  
-  <!-- Aquí van otras secciones, como el botón de guardar asistencia -->
-  <ion-button expand="full" (click)="exportarAsistencia()">Descargar</ion-button>
+<ion-content>
+  <!-- Cuadro de búsqueda para seleccionar curso -->
+  <ion-item>
+    <ion-label>Seleccionar Curso</ion-label>
+    <ion-select [(ngModel)]="cursoSeleccionado" placeholder="Elige un curso">
+      <ion-select-option value="matematicas">Matemáticas</ion-select-option>
+      <ion-select-option value="fisica">Física</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Mostrar estudiantes según el curso seleccionado -->
+  <ng-container *ngIf="cursoSeleccionado === 'matematicas'">
+    <ion-card *ngFor="let estudiante of estudiantesMatematicas">
+      <ion-card-header>
+        <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Clases Realizadas: {{totalClasesMatematicas}}
+        </p>
+        <p>Asistencias: {{ estudiante.asistencias }} De {{ totalClasesMatematicas }}</p>
+        <ion-button expand="full" (click)="exportarAsistencia()">Descargar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="cursoSeleccionado === 'fisica'">
+    <ion-card *ngFor="let estudiante of estudiantesMatematicas">
+      <ion-card-header>
+        <ion-card-title>{{ estudiante.nombre }} {{ estudiante.apellido }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Clases Realizadas: {{totalClasesFisica}}
+        </p>
+        <p>Asistencias: {{ estudiante.clasesAsistidasFisica }} De {{ totalClasesFisica }}</p>
+        <ion-button expand="full" (click)="exportarAsistencia()">Descargar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 </ion-content>

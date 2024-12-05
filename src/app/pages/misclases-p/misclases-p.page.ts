@@ -18,14 +18,14 @@ export class MisclasesPPage implements OnInit {
       title: 'Matematicas 011D',
       basicContent: 'Martes - Jueves',
       additionalContent: '100% de asistencias en promedio de la sección',
-      route: '/curso-database',  // Ruta para el curso de Base de Datos
+      route: '/matematicas',  // Ruta para el curso de Base de Datos
     },
     {
       id: 4,
       title: 'Programación de Aplicaciones Móviles 010D',
       basicContent: 'Martes - Jueves',
       additionalContent: '80% de asistencias en promedio de la sección',
-      route: '/curso-movil',  // Ruta para el curso de Aplicaciones Móviles
+      route: '/matematicas',  // Ruta para el curso de Aplicaciones Móviles
     }
   ];
 
